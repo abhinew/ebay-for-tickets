@@ -6,7 +6,7 @@ import Button from '@material-ui/core/Button';
 import {withRouter} from 'react-router'
 import {userId} from '../../jwt'
 import {connect} from 'react-redux'
-// import AccountIcon from 'material-ui-icons/AccountBox'
+
 
 const TopBar = (props) => {
   const { location, history, user } = props
@@ -17,10 +17,10 @@ const TopBar = (props) => {
         <Typography variant="title" color="inherit" style={{flex: 1}}>
           Groupon
         </Typography>
-        {/* {
+        {
           user &&
-          <Button color="inherit"><AccountIcon /> { user.firstName }</Button>
-        } */}
+          <Button color="inherit">{ user.firstName }</Button>
+        }
 
         {
           location.pathname.indexOf('signup') > 0 &&
