@@ -25,7 +25,7 @@ class EventsList extends PureComponent {
         </li> 
     )
     onNextClick = () => {
-        
+        debugger;
         this.setState({activePage: this.state.activePage + 1})
     }
     onPreviousClick = () => {
@@ -36,14 +36,17 @@ class EventsList extends PureComponent {
     let { events } =  this.props;
     const { classes } = this.props;
     let startIndex = (this.state.activePage - 1) * 4;
-    let eventsList = events.splice(startIndex,4)
+    let currentPageEvents = events.slice(startIndex, startIndex + 4);
+    let showNextButton = (this.state.activePage <= Math.floor(events.length / 4))
+    console.log(showNextButton)
        return (
            <div> 
                 <ul>
-                    { eventsList.map(this.displayEvent) }
+                    { currentPageEvents.map(this.displayEvent) }
                 </ul>
-                <Button variant="contained" color="primary" className={classes.button} onClick={  this.state.activePage > 1? this.onPreviousClick : null }>Previous</Button>
-                <Button variant="contained" color="primary" className={classes.button} onClick={ this.state.activePage <= Math.floor(events.length / 4)? this.onNextClick: null }>Next</Button>
+                {(this.state.activePage > 1) ? <Button variant="contained" color="primary" className={classes.button} onClick={ this.onPreviousClick.bind(this) }>Previous</Button> : null }
+                {   
+                    (this.state.activePage <= Math.floor(events.length / 4)) ? <Button variant="contained" color="primary" className={classes.button} onClick={ this.onNextClick.bind(this) }>Next</Button> : null }
            </div>
        )
    }
