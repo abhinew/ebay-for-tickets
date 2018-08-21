@@ -2,6 +2,7 @@ import React, {PureComponent} from 'react'
 import { connect } from 'react-redux';
 import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles';
+import { Link } from 'react-router-dom'
 
 const styles = theme => ({
     button: {
@@ -17,11 +18,16 @@ class EventsList extends PureComponent {
         activePage: 1
     }
     displayEvent = (event) => (
-        <li key={event.id}>
+        
+        <li key={event.event_id}>
+            
             <div>
                 <h1>{event.name}</h1>
-                <img src={event.image_url} alt="event-poster" />
+                <Link to={`/events/${event.event_id}`} ><img src={event.image_url} alt="event-poster" /></Link>
+                <p>{event.description}</p>
+                <span>From {event.start_date} to {event.end_date}</span>
             </div>
+            
         </li> 
     )
     onNextClick = () => {
@@ -37,8 +43,7 @@ class EventsList extends PureComponent {
     const { classes } = this.props;
     let startIndex = (this.state.activePage - 1) * 4;
     let currentPageEvents = events.slice(startIndex, startIndex + 4);
-    let showNextButton = (this.state.activePage <= Math.floor(events.length / 4))
-    console.log(showNextButton)
+
        return (
            <div> 
                 <ul>
