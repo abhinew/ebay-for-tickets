@@ -7,12 +7,19 @@ import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import './EventDetails.css'
+import { Link } from 'react-router-dom'
+import Button from '@material-ui/core/Button'
+
 
 const styles = theme => ({
     root: {
       width: '100%',
       marginTop: theme.spacing.unit * 3,
       overflowX: 'auto',
+    },
+    button: {
+        margin: theme.spacing.unit,
     },
     table: {
       minWidth: 700,
@@ -23,14 +30,11 @@ const styles = theme => ({
 
 class EventDetails extends PureComponent {
   
-    
-  
     render() {
          let { event, classes, tickets } = this.props;
-
-         
+ 
         return(
-            <div>
+            <div className="event-container" >
                 <h1>{event.name}</h1>
                 <img src={event.image_url} alt="evet-poster" />
                 <Paper className={classes.root}>
@@ -39,18 +43,21 @@ class EventDetails extends PureComponent {
                 <TableRow>
                     <TableCell>Price</TableCell>
                     <TableCell numeric>Author</TableCell>
-                    <TableCell numeric>Risk percentage</TableCell>
+                    <TableCell numeric>Risk color</TableCell>
                 </TableRow>
                 </TableHead>
                 <TableBody>
                 {tickets.map(ticket => {
                     return (
-                    <TableRow key={ticket.ticket_id}>
-                        {/* <TableCell component="th" scope="row">{row.name}</TableCell> */}
-                        <TableCell numeric>{ticket.price}</TableCell>
-                        <TableCell numeric>{ticket.author}</TableCell>
-                        <TableCell numeric>{ticket.risk_color}</TableCell>
-                    </TableRow>
+                            <TableRow key={ticket.ticket_id}>
+
+                                <TableCell numeric>{ticket.price}</TableCell>
+                                <TableCell numeric>{ticket.author}</TableCell>
+                                <TableCell numeric>{ticket.color}</TableCell>
+                                <TableCell numeric><Link to={`/tickets/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>More</Button> </Link></TableCell>  
+ 
+                            </TableRow>
+                        
                     );
                 })}
                 </TableBody>
@@ -73,7 +80,6 @@ const mapStateToProps = (state, props) => {
         }
         
     })
-    console.log(tickets);
     return {
         event : event,
         tickets: tickets
