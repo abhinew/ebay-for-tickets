@@ -86,16 +86,14 @@ class EventDetails extends PureComponent {
 
 
 const mapStateToProps = (state, props) => {
-    let eventId = parseInt(props.match.params.id);
+    let eventId = parseInt(props.match.params.id, 10);
     let event = state.events.find((event) => {    
        return event.event_id === eventId;
     })
     let tickets = state.tickets.filter((ticket) => {
-        if (ticket.event_id === eventId) {
-            return ticket;
-        }
-        
-    })
+        return ticket.event_id === eventId;
+           
+        })
     return {
         event : event,
         tickets: tickets
