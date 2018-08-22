@@ -26,42 +26,58 @@ const styles = theme => ({
     },
   });
 
+  let color = "null";
 
 
 class EventDetails extends PureComponent {
-  
+    findRiskColor = (riskPercent) => {
+        if (riskPercent < 30) {
+            color = "#32CD32"
+        }
+        else if (riskPercent > 30 && riskPercent < 60) {
+            color = "#FF8C00"
+        }
+        else {
+            color = "#FF0000"
+        }
+        return color;
+    }
     render() {
          let { event, classes, tickets } = this.props;
  
         return(
             <div className="event-container" >
                 <h1>{event.name}</h1>
-                <img src={event.image_url} alt="evet-poster" />
+                <img src={event.image_url} alt="event-poster" />
                 <Paper className={classes.root}>
-                <Table className={classes.table}>
-                <TableHead>
-                <TableRow>
-                    <TableCell>Price</TableCell>
-                    <TableCell numeric>Author</TableCell>
-                    <TableCell numeric>Risk color</TableCell>
-                </TableRow>
-                </TableHead>
-                <TableBody>
-                {tickets.map(ticket => {
-                    return (
+                    <Table className={classes.table}>
+                    <TableHead>
+                    <TableRow>
+                        <TableCell>Price</TableCell>
+                        <TableCell numeric>Author</TableCell>
+                        <TableCell numeric>Risk color</TableCell>
+                        <TableCell numeric></TableCell>
+                    </TableRow>
+                    </TableHead>
+                    <TableBody>
+                    {tickets.map(ticket => {
+                        let color = this.findRiskColor(ticket.risk_percent);
+                        let customStyles = {  height: '25px',
+                            width: '25px',
+                            'background-color': color,
+                            'border-radius': '50%',
+                            display: 'inline-block' }
+                        return (
                             <TableRow key={ticket.ticket_id}>
-
                                 <TableCell numeric>{ticket.price}</TableCell>
                                 <TableCell numeric>{ticket.author}</TableCell>
-                                <TableCell numeric>{ticket.color}</TableCell>
+                                <TableCell numeric><span style={ customStyles }></span></TableCell>
                                 <TableCell numeric><Link to={`/tickets/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>More</Button> </Link></TableCell>  
- 
-                            </TableRow>
-                        
-                    );
-                })}
-                </TableBody>
-                </Table>
+                            </TableRow>    
+                        );
+                    })}
+                    </TableBody>
+                    </Table>
                 </Paper>
             </div>
         )
