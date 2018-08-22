@@ -8,6 +8,8 @@ import SignupPage from './components/signup/SignupPage';
 import EventsList from "./components/events/EventsList";
 import EventDetails from './components/events/EventDetails'
 import TicketPage from './components/events/TicketPage';
+import CreateEvent from './components/events/CreateEvent';
+import AddTicket from './components/events/AddTicket'
 
 class App extends Component {
   render() {
@@ -25,6 +27,9 @@ class App extends Component {
             <Route exact path="/events/:id" component={EventDetails} />
             <Route exact path="/tickets/:id" component={TicketPage} />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
+            <Route exact path="/create-event" component={CreateEvent} />
+            <Route exact path="/add-ticket" component={AddTicket} />
+
           </main>
         </div>
       </Router>

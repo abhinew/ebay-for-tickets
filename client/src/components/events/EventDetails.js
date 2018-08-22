@@ -93,7 +93,7 @@ const mapStateToProps = (state, props) => {
     let tickets = state.tickets.filter((ticket) => {
         return ticket.event_id === eventId;
            
-        })
+    })
     return {
         event : event,
         tickets: tickets

@@ -31,7 +31,7 @@ class EventsList extends PureComponent {
         </li> 
     )
     onNextClick = () => {
-        debugger;
+        
         this.setState({activePage: this.state.activePage + 1})
     }
     onPreviousClick = () => {
@@ -46,6 +46,8 @@ class EventsList extends PureComponent {
 
        return (
            <div> 
+               <Link to={`/create-event/`}><Button variant="contained" color="primary" className={classes.button}>CREATE EVENT</Button></Link>
+               <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>
                 <ul>
                     { currentPageEvents.map(this.displayEvent) }
                 </ul>

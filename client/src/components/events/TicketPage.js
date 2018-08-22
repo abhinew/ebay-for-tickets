@@ -9,7 +9,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {updateTicket} from '../../actions/tickets'
-
+import Comments from './Comments';
 
 const styles = theme => ({
     textField: {
@@ -121,10 +121,7 @@ class TicketPage extends PureComponent {
     
     render() {
          let { classes, ticket } = this.props;
-
-         let isDialogOpen = this.state.open;
-        console.log(isDialogOpen);
-        
+         let isDialogOpen = this.state.open;        
         return(
             <div>
                 <h4>Ticket from  {ticket.author} </h4>
@@ -133,17 +130,7 @@ class TicketPage extends PureComponent {
                 <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
                 <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
                 {isDialogOpen? this.renderDialog(ticket):null}
-                <div className="comments-section">
-                    <h3> Comments</h3>
-                    <TextField
-                        id="name"
-                        label="Enter your comment"
-                        className={classes.textField}
-                        onChange={this.handleCommentChange}
-                        margin="normal"
-                    />
-                    <Button variant="contained" color="primary" className={classes.button} >Submit</Button>
-                </div>
+                <Comments ticketId={ticket.ticket_id}/>
                
             </div>
         )
@@ -152,9 +139,7 @@ class TicketPage extends PureComponent {
 
 const mapStateToProps = (state, props) => {
     let ticketId = parseInt(props.match.params.id, 10); 
-    let ticket = state.tickets.find((ticket) => {    
-       return ticket.ticket_id === ticketId;
-    })
+    let ticket = state.tickets.find((ticket) => ticket.ticket_id === ticketId)
     return {
         ticket: ticket
     }

@@ -3,29 +3,21 @@ import {baseUrl} from '../constants'
 import {logout} from './users'
 import {isExpired} from '../jwt'
 
-export const ADD_GAME = 'ADD_GAME'
+export const ADD_EVENT = 'ADD_EVENT'
 export const UPDATE_GAME = 'UPDATE_GAME'
 export const UPDATE_GAMES = 'UPDATE_GAMES'
-export const JOIN_GAME_SUCCESS = 'JOIN_GAME_SUCCESS'
-export const UPDATE_GAME_SUCCESS = 'UPDATE_GAME_SUCCESS'
 
-const updateEvents = events => ({
+const updateEvents = games => ({
   type: UPDATE_GAMES,
-  payload: events
+  payload: games
 })
 
-const addEvent = game => ({
-  type: ADD_GAME,
-  payload: game
+export const addEvent = event => ({
+  type: ADD_EVENT,
+  payload: event
 })
 
-const updateEventSuccess = () => ({
-  type: UPDATE_GAME_SUCCESS
-})
 
-const joinEventSuccess = () => ({
-  type: JOIN_GAME_SUCCESS
-})
 
 
 export const getEvents = () => (dispatch, getState) => {
