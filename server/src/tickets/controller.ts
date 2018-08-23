@@ -13,6 +13,7 @@ import { Ticket } from './entity';
     ) {
       ticket.author_name = `${user.firstName} ${user.lastName}`;
       ticket.createdDate = new Date();
+      console.log(ticket);
       return ticket.save()
     }
   

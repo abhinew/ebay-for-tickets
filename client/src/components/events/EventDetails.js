@@ -60,12 +60,13 @@ class EventDetails extends PureComponent {
             return <Redirect to="/"/>
         }
  
+        console.log(event);
         return(
             <div className="event-container" >
                 <h1>{event.name}</h1>
                 <img src={event.image_url} width="500" height="500" alt="event-poster" />
                 <br />
-                {authenticated? <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
+                {authenticated? <Link to={`/add-ticket/${event.event_id}`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                     <TableHead>
@@ -81,8 +82,8 @@ class EventDetails extends PureComponent {
                         let color = this.findRiskColor(ticket.risk_percent);
                         let customStyles = {  height: '25px',
                             width: '25px',
-                            'background-color': color,
-                            'border-radius': '50%',
+                            'backgroundColor': color,
+                            'borderRadius': '50%',
                             display: 'inline-block' }
                         return (
                             <TableRow key={ticket.ticket_id}>

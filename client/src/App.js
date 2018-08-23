@@ -27,7 +27,7 @@ class App extends Component {
             <Route exact path="/events/:id" component={EventDetails} />
             <Route exact path="/tickets/:id" component={TicketPage} />
             <Route exact path="/create-event" component={CreateEvent} />
-            <Route exact path="/add-ticket" component={AddTicket} />
+            <Route exact path="/add-ticket/:event_id" component={AddTicket} />
             <Route exact path="/" render={() => <Redirect to="/events" />} />
           </main>
         </div>

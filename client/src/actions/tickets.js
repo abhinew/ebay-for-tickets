@@ -16,6 +16,8 @@ export const updateTicket = (updatedTicket, ticketId) => {
         }
     }
 }
+
+
 export const saveTickets = (id, tickets) => {
     
     return {
@@ -26,6 +28,23 @@ export const saveTickets = (id, tickets) => {
         }
     }
 }
+
+export const createTicket = (ticket) => (dispatch, getState) => {
+    const state = getState()
+    if (!state.currentUser) return null
+    const jwt = state.currentUser.jwt
+  
+    if (isExpired(jwt)) return dispatch(logout())
+
+    var event_id = ticket.event_id;
+  
+    return request
+      .post(`${baseUrl}/ticket`)
+      .send(ticket)
+      .set('Authorization', `Bearer ${jwt}`)
+      .catch(err => console.error(err))
+}
+  
  
 export const getTickets = (id) => (dispatch, getState) => {
     const state = getState()
@@ -36,6 +55,7 @@ export const getTickets = (id) => (dispatch, getState) => {
   
     request
       .get(`${baseUrl}/tickets/${id}`)
+
       .set('Authorization', `Bearer ${jwt}`)
       .then(result => dispatch(saveTickets(id, result.body)))
       .catch(err => console.error(err))
