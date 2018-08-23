@@ -45,7 +45,7 @@ class EventsList extends PureComponent {
             <Paper className={classes.event}>    
                 <div>
                     <h1>{event.name}</h1>
-                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} alt="event-poster" /></Link>
+                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="200" height="200" alt="event-poster" /></Link>
                     <p>{event.description}</p>
                     <span>From {event.start_date} to {event.end_date}</span>
                 </div>
@@ -53,7 +53,9 @@ class EventsList extends PureComponent {
         </li>)
     }
     onNextClick = () => {
-        this.setState({activePage: this.state.activePage + 1})
+        this.setState({
+            activePage: this.state.activePage + 1
+        })
     }
     onPreviousClick = () => {
         
@@ -64,12 +66,11 @@ class EventsList extends PureComponent {
             currentPageEvents;
         const { classes } = this.props;
         let startIndex = (this.state.activePage - 1) * 4;
-        console.log(startIndex, " is start index");
-        let hasLessThan4 = events.length < 4;
-        if (hasLessThan4) {
-            currentPageEvents = events.slice();
-        } else {
+        let hasMoreThan4 = events.length > 4;
+        if (hasMoreThan4) {
             currentPageEvents = events.slice(startIndex, startIndex + 4);
+        } else {
+            currentPageEvents = events.slice();
         }
 
         if (!authenticated) {
@@ -83,14 +84,13 @@ class EventsList extends PureComponent {
                     <ul className={classes.list}>
                         { currentPageEvents.map(this.displayEvent) }
                     </ul>
-                    { (!hasLessThan4) ? this.getPageNumbers(): null}
+                    { (hasMoreThan4) ? this.getPageNumbers(): null}
             </div>
         )
     }
 
     getPageNumbers() {
-        let {classes, events}  =this.props;
-        console.log(events);
+        let {classes, events}  = this.props;
         let shouldShowNextButton = this.state.activePage <= Math.floor(events.length / 4);
         let shouldShowPrevButton = this.state.activePage > 1;
         return <div>

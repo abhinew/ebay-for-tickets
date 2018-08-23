@@ -29,26 +29,17 @@ class CreateEvent extends PureComponent {
         description: null
     }
 
-    isValid = () => {
-        if ((_.trim(this.state.name)).length === 0) {
-            this.state.errors.name = true;
-            return false;
-        }
-    }
     handleSubmit = () => {
         const { history } = this.props;
-
-        if (this.isValid()) {
-            this.props.createEvent({
-                name: this.state.name,
-                image_url: this.state.image_url,
-                start_date: this.state.start_date,
-                end_date: this.state.end_date,
-                description: this.state.description
-            }).then(function () {
-                history.push(`/`);
-            })
-        }
+        this.props.createEvent({
+            name: this.state.name,
+            image_url: this.state.image_url,
+            start_date: this.state.start_date,
+            end_date: this.state.end_date,
+            description: this.state.description
+        }).then(function () {
+            history.push(`/`);
+        })
     }
 
     render() {
