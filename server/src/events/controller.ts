@@ -1,9 +1,9 @@
 import { 
-  JsonController, CurrentUser, Authorized, Post, HttpCode, Body } from 'routing-controllers'
+  JsonController, CurrentUser, Authorized, Post, HttpCode, Body, Get, Param } from 'routing-controllers'
 import { Event } from './entities'
-// import User from '../users/entity'
+import User from '../users/entity'
 
-import {io} from '../index'
+// import {io} from '../index'
 
 
 
@@ -14,17 +14,9 @@ export default class EventController {
   @Post('/events')
   @HttpCode(201)
   async createEvent(
-    // @CurrentUser() user: User,
-    @Body() newEvent: Event
+    @CurrentUser() user: User,
+    @Body() event: Event
   ) {
-    console.log("newEvent", newEvent);
-    let event = new Event;
-    event.name = newEvent.name;
-    event.image_url = newEvent.image_url;
-    event.date = newEvent.date;
-    event.description = newEvent.description;
-    event.ticket_count = newEvent.ticket_count;
-
     return event.save()
 
     // await Player.create({
@@ -43,6 +35,17 @@ export default class EventController {
     // return event
   }
 
+  @Authorized()
+  @Get('/events/:id([0-9]+)')
+  getGame( @Param('id') id: number) {
+    return Event.findOneById(id)
+  }
+
+  @Authorized()
+  @Get('/events')
+  getGames() {
+    return Event.find()
+  }
  
 }
 

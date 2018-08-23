@@ -16,13 +16,13 @@ export class Event extends BaseEntity {
   image_url: string
 
   @Column()
-  date: Date
+  start_date: Date
+
+  @Column()
+  end_date: Date
 
   @Column('text')
   description: string
-
-  @Column()
-  ticket_count: number
 
 }
 

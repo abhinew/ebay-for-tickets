@@ -1,3 +1,7 @@
+import {ADD_EVENT, UPDATE_EVENT, UPDATE_EVENTS} from '../actions/events'
+import {USER_LOGOUT} from '../actions/users'
+
+
 let initialState =  [
     {
         event_id: 1,
@@ -82,6 +86,19 @@ let initialState =  [
   
 ];
 
-export default (state = initialState) => {
-    return state;
+export default (state = initialState, {type, payload}) => {
+    let newState = state.slice();
+    switch (type) {
+        case USER_LOGOUT:
+          return null
+        
+        case ADD_EVENT:
+         
+          return newState.concat(payload)
+    
+        case UPDATE_EVENT:
+          return newState
+        default: 
+        return state;
+    }
 }

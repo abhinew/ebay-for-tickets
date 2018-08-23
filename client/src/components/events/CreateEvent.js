@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
-import {addEvent} from '../../actions/events'
+import { createEvent } from '../../actions/events'
 
 
 const styles = theme => ({
@@ -23,52 +23,69 @@ class CreateEvent extends PureComponent {
        description: null
     }
     handleSubmit = () => {
-        this.props.addEvent({
+        this.props.createEvent({
             name: this.state.name,
-            picture: this.state.image_url,
-            date: this.state.date,
+            image_url: this.state.image_url,
+            start_date: this.state.start_date,
+            end_date: this.state.end_date,
             description: this.state.description
         })
     }
    
     render () {
         let { classes } = this.props;
+        
+
         return (
             <div className={classes.commentsSection}>
+                <h1>Create event</h1>
                 <TextField
                     id="name"
                     label="Name"
                     className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({name:newValue})}}
+                    onChange = {(event) => {this.setState({name:event.target.value})}}
                     margin="normal"
                 />
                 <br />
                 <TextField
-                    id="picture"
-                    label="Picture"
+                    id="image"
+                    label="Image url"
                     className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({image_url:newValue})}}
+                    onChange = {(event) => {this.setState({image_url:event.target.value})}}
                     margin="normal"
                 />
                 <br />
 
                 <TextField
                     id="date"
-                    label="Date"
+                    label="Start Date"
                     type="date"
                     className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({date:newValue})}}
+                    onChange = {(event) => {this.setState({start_date:event.target.value})}}
                     margin="normal"
                     InputLabelProps={{
                         shrink: true,
                     }}
                 />
                 <br />
+                <TextField
+                    id="date"
+                    label="End Date"
+                    type="date"
+                    className={classes.textField}
+                    onChange = {(event) => {this.setState({end_date:event.target.value})}}
+                    margin="normal"
+                    InputLabelProps={{
+                        shrink: true,
+                    }}
+                />
+                <br />
+
                  <TextField
                     id="description"
                     label="description"
                     className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({description:newValue})}}
+                    onChange = {(event) => {this.setState({description:event.target.value})}}
                     margin="normal"
                 />
                 <br />
@@ -90,4 +107,4 @@ class CreateEvent extends PureComponent {
 
 
 let CreateEventWrapper  = withStyles(styles)(CreateEvent);
-export default connect(null, { addEvent })(CreateEventWrapper)   
+export default connect(null, { createEvent })(CreateEventWrapper)   

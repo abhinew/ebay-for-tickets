@@ -26,7 +26,7 @@ class AddTicket extends PureComponent {
     handleSubmit = () => {
         this.props.addEvent({
             name: this.state.name,
-            picture: this.state.image_url,
+            image_url: this.state.image_url,
             date: this.state.date,
             description: this.state.description
         })
@@ -43,15 +43,13 @@ class AddTicket extends PureComponent {
                         name: 'event'
                         }}
                     >
-                   
-                    {/* {this.props.bases.map(this.createMenuItem)} */}
-                
+                                   
                 </Select>
                 
                 <br />
                 <TextField
-                    id="picture"
-                    label="Picture"
+                    id="image"
+                    label="Image url"
                     className={classes.textField}
                     onChange = {(event,newValue) => {this.setState({image_url:newValue})}}
                     margin="normal"

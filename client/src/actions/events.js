@@ -4,18 +4,21 @@ import {logout} from './users'
 import {isExpired} from '../jwt'
 
 export const ADD_EVENT = 'ADD_EVENT'
-export const UPDATE_GAME = 'UPDATE_GAME'
-export const UPDATE_GAMES = 'UPDATE_GAMES'
+export const UPDATE_EVENT = 'UPDATE_EVENT'
+export const UPDATE_EVENTS = 'UPDATE_EVENTS'
 
-const updateEvents = games => ({
-  type: UPDATE_GAMES,
-  payload: games
+const updateEvents = events => ({
+  type: UPDATE_EVENTS,
+  payload: events
 })
 
-export const addEvent = event => ({
+export const addEvent = event => {
+  return {
   type: ADD_EVENT,
   payload: event
-})
+  }
+}
+  
 
 
 
@@ -35,7 +38,8 @@ export const getEvents = () => (dispatch, getState) => {
 }
 
 
-export const createEvent = () => (dispatch, getState) => {
+export const createEvent = (event) => (dispatch, getState) => {
+  console.log(event);
   const state = getState()
   const jwt = state.currentUser.jwt
 
@@ -43,7 +47,8 @@ export const createEvent = () => (dispatch, getState) => {
 
   request
     .post(`${baseUrl}/events`)
-    .set('Authorization', `Bearer ${jwt}`)
+    .send(event)
+    .set('Authorization', `Bearer ${jwt}`) 
     .then(result => dispatch(addEvent(result.body)))
     .catch(err => console.error(err))
 }

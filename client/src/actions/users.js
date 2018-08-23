@@ -19,7 +19,6 @@ export const logout = () => ({
 })
 
 const userLoginSuccess = (login) => {
-  debugger;
   return {
   type: USER_LOGIN_SUCCESS,
   payload: login
