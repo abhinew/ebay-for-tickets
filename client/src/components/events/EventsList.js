@@ -42,7 +42,7 @@ class EventsList extends PureComponent {
     displayEvent = (event) => {
         const {classes} = this.props;
         return ( <li key={event.event_id}>
-            <Paper className={classes.event}>    
+            <Paper className={classes.event}>
                 <div>
                     <h1>{event.name}</h1>
                     <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="200" height="200" alt="event-poster" /></Link>
@@ -58,7 +58,7 @@ class EventsList extends PureComponent {
         })
     }
     onPreviousClick = () => {
-        
+
         this.setState({activePage: this.state.activePage - 1})
     }
    render() {
@@ -66,6 +66,12 @@ class EventsList extends PureComponent {
             currentPageEvents;
         const { classes } = this.props;
         let startIndex = (this.state.activePage - 1) * 4;
+
+
+        if (!authenticated) {
+            return <Redirect to="/login" />;
+        }
+
         let hasMoreThan4 = events.length > 4;
         if (hasMoreThan4) {
             currentPageEvents = events.slice(startIndex, startIndex + 4);
@@ -73,14 +79,10 @@ class EventsList extends PureComponent {
             currentPageEvents = events.slice();
         }
 
-        if (!authenticated) {
-            return <Redirect to="/login" />;
-        } 
-
         return (
-            <div className={classes.container}> 
-                <Link to={`/create-event/`}><Button variant="contained" color="primary" className={classes.button}>CREATE EVENT</Button></Link>
-                <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>
+            <div className={classes.container}>
+                {authenticated? <Link to={`/create-event/`}><Button variant="contained" color="primary" className={classes.button}>CREATE EVENT</Button></Link> :null}
+                {authenticated? <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
                     <ul className={classes.list}>
                         { currentPageEvents.map(this.displayEvent) }
                     </ul>
@@ -106,6 +108,6 @@ const mapStateToProps = state => ({
     users: state.users === null ? null : state.users,
     events: state.events
 })
-  
-let EventsListWrapper = withStyles(styles)(EventsList) 
+
+let EventsListWrapper = withStyles(styles)(EventsList)
 export default connect(mapStateToProps, { getUsers, getEvents })(EventsListWrapper);
