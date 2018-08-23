@@ -3,10 +3,6 @@ import {
 import { Event } from './entities'
 import User from '../users/entity'
 
-// import {io} from '../index'
-
-
-
 @JsonController()
 export default class EventController {
 
@@ -19,33 +15,21 @@ export default class EventController {
   ) {
     return event.save()
 
-    // await Player.create({
-    //   game: entity, 
-    //   user,
-    //   symbol: 'x'
-    // }).save()
-
-    // const event = await Event.findOneById(entity.event_id)
-
-    // io.emit('action', {
-    //   type: 'ADD_GAME',
-    //   payload: event
-    // })
-
-    // return event
   }
 
-  @Authorized()
+  // @Authorized()
   @Get('/events/:id([0-9]+)')
   getGame( @Param('id') id: number) {
-    return Event.findOneById(id)
+    return Event.findOneById(id);
   }
 
-  @Authorized()
-  @Get('/events')
+  @Get('/allevents')
   getGames() {
-    return Event.find()
+
+    var events = Event.getActiveEvents();
+    console.log(events);
+    return events;
   }
- 
+//test
 }
 

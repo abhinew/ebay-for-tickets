@@ -45,7 +45,7 @@ export const createEvent = (event) => (dispatch, getState) => {
 
   if (isExpired(jwt)) return dispatch(logout())
 
-  request
+  return request
     .post(`${baseUrl}/events`)
     .send(event)
     .set('Authorization', `Bearer ${jwt}`) 

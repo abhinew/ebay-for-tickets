@@ -24,6 +24,13 @@ export class Event extends BaseEntity {
   @Column('text')
   description: string
 
+
+  static getActiveEvents() {
+    return this.createQueryBuilder("event")
+                .where("event.start_date > :today", { today: new Date() })
+                .getMany();
+  }
+
 }
 
 

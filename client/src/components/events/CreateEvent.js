@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { createEvent } from '../../actions/events'
+import {Redirect} from 'react-router-dom'
 
 
 const styles = theme => ({
@@ -23,13 +24,17 @@ class CreateEvent extends PureComponent {
        description: null
     }
     handleSubmit = () => {
+        const { history } = this.props;
         this.props.createEvent({
             name: this.state.name,
             image_url: this.state.image_url,
             start_date: this.state.start_date,
             end_date: this.state.end_date,
             description: this.state.description
+        }).then(function() {
+            history.push(`/`);
         })
+        
     }
    
     render () {
