@@ -15,7 +15,7 @@ const TopBar = (props) => {
     <AppBar position="absolute" style={{zIndex:10}}>
       <Toolbar>
         <Typography variant="title" color="inherit" style={{flex: 1}}>
-          Groupon
+          Ticketmaster
         </Typography>
         {
           user &&
@@ -43,10 +43,16 @@ const TopBar = (props) => {
   )
 }
 
-const mapStateToProps = state => ({
-  user: state.currentUser && state.users &&
+const mapStateToProps = state => {
+
+
+  return {
+    user: state.currentUser && state.users &&
     state.users[userId(state.currentUser.jwt)]
-})
+  }
+
+}
+  
 
 export default withRouter(
   connect(mapStateToProps)(TopBar)
