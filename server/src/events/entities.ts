@@ -9,11 +9,11 @@ export class Event extends BaseEntity {
   @PrimaryGeneratedColumn()
   event_id?: number
 
-  @Column('text', {nullable:false})
+  @Column('text')
   name: string
 
   @Column('text')
-  image: string
+  image_url: string
 
   @Column()
   date: Date
