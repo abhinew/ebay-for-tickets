@@ -5,8 +5,7 @@ import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { createEvent } from '../../actions/events'
 import Paper from '@material-ui/core/Paper';
-import _ from "lodash";
-
+import {Redirect} from 'react-router-dom'
 const styles = theme => ({
     eventCreateForm: {
         padding: "20px",
@@ -43,8 +42,11 @@ class CreateEvent extends PureComponent {
     }
 
     render() {
-        let { classes } = this.props;
+        let { classes, authenticated } = this.props;
 
+        if (!authenticated) {
+            return <Redirect to="/login" />;
+        }
 
         return (
             <div>
@@ -114,14 +116,14 @@ class CreateEvent extends PureComponent {
 
 }
 
-// const mapStateToProps = (state, props) => {
+const mapStateToProps = (state, props) => {
 
-//     return {
-//         comments : comments
-//     }
-// } 
+    return {
+        authenticated: state.currentUser !== null
+    }
+} 
 
 
 
 let CreateEventWrapper = withStyles(styles)(CreateEvent);
-export default connect(null, { createEvent })(CreateEventWrapper)   
+export default connect(mapStateToProps, { createEvent })(CreateEventWrapper)   
