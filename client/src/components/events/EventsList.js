@@ -65,8 +65,8 @@ class EventsList extends PureComponent {
         const { classes } = this.props;
         let startIndex = (this.state.activePage - 1) * 4;
         console.log(startIndex, " is start index");
-        let hasMoreThan4 = events.length < 4;
-        if (hasMoreThan4) {
+        let hasLessThan4 = events.length < 4;
+        if (hasLessThan4) {
             currentPageEvents = events.slice();
         } else {
             currentPageEvents = events.slice(startIndex, startIndex + 4);
@@ -83,7 +83,7 @@ class EventsList extends PureComponent {
                     <ul className={classes.list}>
                         { currentPageEvents.map(this.displayEvent) }
                     </ul>
-                    {hasMoreThan4 ? this.getPageNumbers(): null}
+                    { (!hasLessThan4) ? this.getPageNumbers(): null}
             </div>
         )
     }

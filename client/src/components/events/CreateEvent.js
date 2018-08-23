@@ -1,10 +1,11 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import { createEvent } from '../../actions/events'
 import Paper from '@material-ui/core/Paper';
+import _ from "lodash";
 
 const styles = theme => ({
     eventCreateForm: {
@@ -12,37 +13,47 @@ const styles = theme => ({
         margin: "20px 30px"
     },
     textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
     }
 });
 
 class CreateEvent extends PureComponent {
 
     state = {
-       name: null,
-       image_url: null,
-       date: null,
-       description: null
+        name: null,
+        image_url: null,
+        start_date: null,
+        end_date: null,
+        description: null
+    }
+
+    isValid = () => {
+        if ((_.trim(this.state.name)).length === 0) {
+            this.state.errors.name = true;
+            return false;
+        }
     }
     handleSubmit = () => {
         const { history } = this.props;
-        this.props.createEvent({
-            name: this.state.name,
-            image_url: this.state.image_url,
-            start_date: this.state.start_date,
-            end_date: this.state.end_date,
-            description: this.state.description
-        }).then(function() {
-            history.push(`/`);
-        })
-        
+
+        if (this.isValid()) {
+            this.props.createEvent({
+                name: this.state.name,
+                image_url: this.state.image_url,
+                start_date: this.state.start_date,
+                end_date: this.state.end_date,
+                description: this.state.description
+            }).then(function () {
+                history.push(`/`);
+            })
+        }
     }
-   
-    render () {
+
+    render() {
         let { classes } = this.props;
-        
+
 
         return (
             <div>
@@ -51,8 +62,9 @@ class CreateEvent extends PureComponent {
                     <TextField
                         id="name"
                         label="Name"
+                        required={true}
                         className={classes.textField}
-                        onChange = {(event) => {this.setState({name:event.target.value})}}
+                        onChange={(event) => { this.setState({ name: event.target.value }) }}
                         margin="normal"
                     />
                     <br />
@@ -60,7 +72,8 @@ class CreateEvent extends PureComponent {
                         id="image"
                         label="Image url"
                         className={classes.textField}
-                        onChange = {(event) => {this.setState({image_url:event.target.value})}}
+                        required={true}
+                        onChange={(event) => { this.setState({ image_url: event.target.value }) }}
                         margin="normal"
                     />
                     <br />
@@ -70,10 +83,11 @@ class CreateEvent extends PureComponent {
                         label="Start Date"
                         type="date"
                         className={classes.textField}
-                        onChange = {(event) => {this.setState({start_date:event.target.value})}}
+                        onChange={(event) => { this.setState({ start_date: event.target.value }) }}
                         margin="normal"
+                        required={true}
                         InputLabelProps={{
-                            shrink: true,
+                            shrink: true
                         }}
                     />
                     <br />
@@ -82,8 +96,9 @@ class CreateEvent extends PureComponent {
                         label="End Date"
                         type="date"
                         className={classes.textField}
-                        onChange = {(event) => {this.setState({end_date:event.target.value})}}
+                        onChange={(event) => { this.setState({ end_date: event.target.value }) }}
                         margin="normal"
+                        required={true}
                         InputLabelProps={{
                             shrink: true,
                         }}
@@ -93,14 +108,15 @@ class CreateEvent extends PureComponent {
                     <TextField
                         id="description"
                         label="description"
+                        required={true}
                         className={classes.textField}
-                        onChange = {(event) => {this.setState({description:event.target.value})}}
+                        onChange={(event) => { this.setState({ description: event.target.value }) }}
                         margin="normal"
                     />
                     <br />
                     <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit.bind(this)}>Submit</Button>
                 </Paper>
-           </div>
+            </div>
         )
     }
 
@@ -108,7 +124,7 @@ class CreateEvent extends PureComponent {
 }
 
 // const mapStateToProps = (state, props) => {
-    
+
 //     return {
 //         comments : comments
 //     }
@@ -116,5 +132,5 @@ class CreateEvent extends PureComponent {
 
 
 
-let CreateEventWrapper  = withStyles(styles)(CreateEvent);
+let CreateEventWrapper = withStyles(styles)(CreateEvent);
 export default connect(null, { createEvent })(CreateEventWrapper)   
