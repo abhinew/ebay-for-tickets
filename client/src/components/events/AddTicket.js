@@ -1,7 +1,7 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import TextField from '@material-ui/core/TextField';
-import { Button, Typography } from '@material-ui/core';
+import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import {addEvent} from '../../actions/events'
 import Select from '@material-ui/core/Select';

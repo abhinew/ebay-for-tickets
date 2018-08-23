@@ -4,14 +4,15 @@ import {logout} from './users'
 import {isExpired} from '../jwt'
 
 export const ADD_EVENT = 'ADD_EVENT'
-export const UPDATE_EVENT = 'UPDATE_EVENT'
 export const UPDATE_EVENTS = 'UPDATE_EVENTS'
 
-const updateEvents = events => ({
-  type: UPDATE_EVENTS,
-  payload: events
-})
-
+const updateEvents = events => {
+  return {
+    type: UPDATE_EVENTS,
+    payload: events
+  }
+}
+ 
 export const addEvent = event => {
   return {
   type: ADD_EVENT,
@@ -24,6 +25,7 @@ export const addEvent = event => {
 
 
 export const getEvents = () => (dispatch, getState) => {
+  console.log("getEvents")
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt
@@ -31,7 +33,7 @@ export const getEvents = () => (dispatch, getState) => {
   if (isExpired(jwt)) return dispatch(logout())
 
   request
-    .get(`${baseUrl}/events`)
+    .get(`${baseUrl}/allevents`)
     .set('Authorization', `Bearer ${jwt}`)
     .then(result => dispatch(updateEvents(result.body)))
     .catch(err => console.error(err))
