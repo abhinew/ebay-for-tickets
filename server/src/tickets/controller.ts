@@ -6,16 +6,15 @@ import { Ticket } from './entity';
   @JsonController()
   export default class TicketController {
   
-    // @Authorized()
-    // @Post('/tickets')
-    // @HttpCode(201)
-    // async createEvent(
-    //   @CurrentUser() user: User,
-    //   @Body() ticket: Ticket
-    // ) {
-    //   return ticket.save()
-  
-    // }
+    @Post('/ticket')
+    @Authorized()
+    @HttpCode(201)
+    async createTicket(@CurrentUser() user: User,@Body() ticket: Ticket
+    ) {
+      ticket.author_name = `${user.firstName} ${user.lastName}`;
+      ticket.createdDate = new Date();
+      return ticket.save()
+    }
   
     @Authorized()
     @Get('/ticket/:id([0-9]+)')
