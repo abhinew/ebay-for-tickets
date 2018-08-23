@@ -10,9 +10,14 @@ import Paper from '@material-ui/core/Paper';
 import './EventDetails.css'
 import { Link } from 'react-router-dom'
 import Button from '@material-ui/core/Button'
-
+import {getTickets} from "../../actions/tickets";
+import {Redirect} from 'react-router-dom';
+import { Typography } from '@material-ui/core';
 
 const styles = theme => ({
+    actionCell: {
+        textAlign: "right"
+    },
     root: {
       width: '100%',
       marginTop: theme.spacing.unit * 3,
@@ -30,6 +35,11 @@ const styles = theme => ({
 
 
 class EventDetails extends PureComponent {
+    componentWillMount() {
+        var event_id = this.props.match.params.id;
+        this.props.getTickets(event_id);
+      }
+    
     findRiskColor = (riskPercent) => {
         if (riskPercent < 30) {
             color = "#32CD32"
@@ -43,19 +53,26 @@ class EventDetails extends PureComponent {
         return color;
     }
     render() {
-         let { event, classes, tickets } = this.props;
+
+        let { event, classes, tickets, authenticated } = this.props;
+
+        if (!event) {
+            return <Redirect to="/"/>
+        }
  
         return(
             <div className="event-container" >
                 <h1>{event.name}</h1>
-                <img src={event.image_url} alt="event-poster" />
+                <img src={event.image_url} width="500" height="500" alt="event-poster" />
+                <br />
+                {authenticated? <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
                 <Paper className={classes.root}>
                     <Table className={classes.table}>
                     <TableHead>
                     <TableRow>
+                        <TableCell >Author</TableCell>
+                        <TableCell>Risk color</TableCell>
                         <TableCell>Price</TableCell>
-                        <TableCell numeric>Author</TableCell>
-                        <TableCell numeric>Risk color</TableCell>
                         <TableCell numeric></TableCell>
                     </TableRow>
                     </TableHead>
@@ -69,10 +86,10 @@ class EventDetails extends PureComponent {
                             display: 'inline-block' }
                         return (
                             <TableRow key={ticket.ticket_id}>
-                                <TableCell numeric>{ticket.price}</TableCell>
-                                <TableCell numeric>{ticket.author}</TableCell>
-                                <TableCell numeric><span style={ customStyles }></span></TableCell>
-                                <TableCell numeric><Link to={`/tickets/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>More</Button> </Link></TableCell>  
+                                <TableCell ><Typography>{ticket.author_name}</Typography></TableCell>
+                                <TableCell><span style={ customStyles }></span></TableCell>
+                                <TableCell ><Typography>{ticket.price}</Typography></TableCell>
+                                <TableCell className={classes.actionCell}><Link to={`/tickets/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>Show</Button> </Link></TableCell>  
                             </TableRow>    
                         );
                     })}
@@ -84,21 +101,25 @@ class EventDetails extends PureComponent {
     }
 }
 
-
 const mapStateToProps = (state, props) => {
-    let eventId = parseInt(props.match.params.id, 10);
-    let event = state.events.find((event) => {    
-       return event.event_id === eventId;
-    })
-    let tickets = state.tickets.filter((ticket) => {
-        return ticket.event_id === eventId;
-           
-    })
+
+    let id = parseInt(props.match.params.id);
+    let theEvent = state.events.find(function (event) {
+        return event.event_id === id;
+    });
+    let tickets = [];
+
+    if (typeof state.tickets[id] !== "undefined") {
+        tickets = state.tickets[id];
+    }
     return {
-        event : event,
+        authenticated: state.currentUser !== null,
+        event : theEvent,
         tickets: tickets
     }
 } 
 
 let EventDetailsWrapper  = withStyles(styles)(EventDetails);
-export default connect(mapStateToProps)(EventDetailsWrapper)
+export default connect(mapStateToProps, {
+    getTickets
+})(EventDetailsWrapper)

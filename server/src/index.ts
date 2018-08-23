@@ -11,6 +11,7 @@ import {Server} from 'http'
 import * as IO from 'socket.io'
 import * as socketIoJwtAuth from 'socketio-jwt-auth'
 import {secret} from './jwt'
+import TicketController from './tickets/controller';
 
 const app = new Koa()
 const server = new Server(app.callback())
@@ -22,7 +23,8 @@ useKoaServer(app, {
   controllers: [
     UserController,
     LoginController,
-    EventController
+    EventController,
+    TicketController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization

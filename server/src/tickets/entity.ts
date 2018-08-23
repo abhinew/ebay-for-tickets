@@ -10,19 +10,22 @@ export class Ticket extends BaseEntity {
   event_id: string
 
   @Column()
-  author_id: string
+  author_name: string
+
+  @Column()
+  price: number
 
   @Column('text')
   image_url: string
 
   @Column()
-  date: Date
+  createdDate: Date
 
-  @Column()
-  risk_percent: number
-
-  @Column()
-  comments_count: number
+  static getTicketsOfEvent(event_id) {
+    return this.createQueryBuilder("ticket")
+                .where("ticket.event_id = :event_id", {event_id})
+                .getMany();
+  }
 
 }
 

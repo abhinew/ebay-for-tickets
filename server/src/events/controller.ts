@@ -6,7 +6,7 @@ import User from '../users/entity'
 @JsonController()
 export default class EventController {
 
-  // @Authorized()
+  @Authorized()
   @Post('/events')
   @HttpCode(201)
   async createEvent(
@@ -17,14 +17,14 @@ export default class EventController {
 
   }
 
-  // @Authorized()
+  @Authorized()
   @Get('/events/:id([0-9]+)')
-  getGame( @Param('id') id: number) {
+  getEvent( @Param('id') id: number) {
     return Event.findOneById(id);
   }
 
   @Get('/allevents')
-  getGames() {
+  getEvents() {
 
     var events = Event.getActiveEvents();
     console.log(events);

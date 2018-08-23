@@ -82,7 +82,7 @@ class EventsList extends PureComponent {
         return (
             <div className={classes.container}>
                 {authenticated? <Link to={`/create-event/`}><Button variant="contained" color="primary" className={classes.button}>CREATE EVENT</Button></Link> :null}
-                {authenticated? <Link to={`/add-ticket/`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
+                
                     <ul className={classes.list}>
                         { currentPageEvents.map(this.displayEvent) }
                     </ul>

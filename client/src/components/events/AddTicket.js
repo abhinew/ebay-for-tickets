@@ -1,17 +1,19 @@
 import React, {PureComponent} from 'react'
 import {connect} from 'react-redux'
 import TextField from '@material-ui/core/TextField';
-import { Button } from '@material-ui/core';
+import { Button, Paper } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import {addEvent} from '../../actions/events'
-import Select from '@material-ui/core/Select';
-
 
 const styles = theme => ({
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: 200,
+    },
+    formBody: {
+        margin: "20px",
+        padding: "20px"
     }
 });
 
@@ -36,44 +38,38 @@ class AddTicket extends PureComponent {
         let { classes } = this.props;
         return (
             <div className={classes.commentsSection}>
-                <Select
-                        value={this.state.name}
-                        onChange={this.handleChange}
-                        inputProps={{
-                        name: 'event'
-                        }}
-                    >
-                                   
-                </Select>
-                
-                <br />
-                <TextField
-                    id="image"
-                    label="Image url"
-                    className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({image_url:newValue})}}
-                    margin="normal"
-                />
-                <br />
-
-                <TextField
-                    id="price"
-                    label="price"
-                    className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({price:newValue})}}
-                    margin="normal"
+                <Paper className={classes.formBody}>
+                    <h1>Add Ticket</h1>
                     
-                />
-                <br />
-                 <TextField
-                    id="description"
-                    label="description"
-                    className={classes.textField}
-                    onChange = {(event,newValue) => {this.setState({description:newValue})}}
-                    margin="normal"
-                />
-                <br />
-                <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit.bind(this)}>Submit</Button>
+                    <br />
+                    <TextField
+                        id="image"
+                        label="Image url"
+                        className={classes.textField}
+                        onChange = {(event,newValue) => {this.setState({image_url:newValue})}}
+                        margin="normal"
+                    />
+                    <br />
+
+                    <TextField
+                        id="price"
+                        label="price"
+                        className={classes.textField}
+                        onChange = {(event,newValue) => {this.setState({price:newValue})}}
+                        margin="normal"
+                        
+                    />
+                    <br />
+                    <TextField
+                        id="description"
+                        label="description"
+                        className={classes.textField}
+                        onChange = {(event,newValue) => {this.setState({description:newValue})}}
+                        margin="normal"
+                    />
+                    <br />
+                    <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit.bind(this)}>Submit</Button>
+                </Paper>
            </div>
         )
     }
