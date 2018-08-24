@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt'
 export default class User extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  id?: number
+  id: number
 
   @IsString()
   @MinLength(2)

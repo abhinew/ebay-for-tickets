@@ -13,7 +13,7 @@ import { Ticket } from './entity';
     ) {
       ticket.author_name = `${user.firstName} ${user.lastName}`;
       ticket.createdDate = new Date();
-      console.log(ticket);
+      ticket.user_id = user.id;
       return ticket.save()
     }
   
@@ -25,9 +25,24 @@ import { Ticket } from './entity';
   
     @Get('/tickets/:event_id([0-9]+)')
     getTickets(@Param("event_id") event_id: number) {
-      return Ticket.getTicketsOfEvent(event_id);
+      return new Promise(function (resolve, reject) {
+        var theTickets;
+        Ticket.getTicketsOfEvent(event_id)
+          .then((tickets) => {
+            theTickets = tickets;
+            return Promise.all(tickets.map(function (ticket) {
+              return ticket.getRisk();
+            }));
+          })
+          .then(function (risks) {
+            resolve({
+              tickets: theTickets,
+              risks: risks
+            });
+          })
+          .catch(() => reject());
+      });
     }
-  //test
 }
   
   
