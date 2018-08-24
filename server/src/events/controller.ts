@@ -2,7 +2,6 @@ import {
   JsonController, Authorized, Post, HttpCode, Body, Get, Param } from 'routing-controllers'
 import { Event } from './entities'
 
-
 @JsonController()
 export default class EventController {
 
@@ -13,7 +12,6 @@ export default class EventController {
     @Body() event: Event
   ) {
     return event.save()
-
   }
 
   @Authorized()
