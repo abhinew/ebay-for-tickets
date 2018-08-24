@@ -90,7 +90,7 @@ class EventDetails extends PureComponent {
                                 <TableCell ><Typography>{ticket.author_name}</Typography></TableCell>
                                 <TableCell><span style={ customStyles }></span></TableCell>
                                 <TableCell ><Typography>{ticket.price}</Typography></TableCell>
-                                <TableCell className={classes.actionCell}><Link to={`/tickets/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>Show</Button> </Link></TableCell>  
+                                <TableCell className={classes.actionCell}><Link to={`/tickets/${event.event_id}/${ticket.ticket_id}`}><Button variant="contained" color="primary" className={classes.button}>Show</Button> </Link></TableCell>  
                             </TableRow>    
                         );
                     })}

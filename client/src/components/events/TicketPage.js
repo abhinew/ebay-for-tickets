@@ -10,6 +10,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {updateTicket} from '../../actions/tickets'
 import Comments from './Comments';
+import {Redirect} from 'react-router-dom';
 
 const styles = theme => ({
     textField: {
@@ -121,7 +122,11 @@ class TicketPage extends PureComponent {
     
     render() {
          let { classes, ticket } = this.props;
-         let isDialogOpen = this.state.open;        
+         let isDialogOpen = this.state.open;  
+         
+         if (!ticket) {
+            return <Redirect to="/"/>
+        }
         return(
             <div>
                 <h4>Ticket from  {ticket.author} </h4>
@@ -139,7 +144,12 @@ class TicketPage extends PureComponent {
 
 const mapStateToProps = (state, props) => {
     let ticketId = parseInt(props.match.params.id, 10); 
-    let ticket = state.tickets.find((ticket) => ticket.ticket_id === ticketId)
+    let eventId = parseInt(props.match.params.event_id, 10); 
+    let ticket = null;
+    if (typeof state.tickets[eventId] !== "undefined" && typeof state.tickets[eventId][ticketId] !== "undefined") {
+        console.log(state.tickets);
+        ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
+    }
     return {
         ticket: ticket
     }
