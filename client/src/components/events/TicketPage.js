@@ -4,6 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import './TicketPage.css'
+import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -13,6 +14,10 @@ import Comments from './Comments';
 import {Redirect} from 'react-router-dom';
 
 const styles = theme => ({
+    ticket: {
+        padding: "30px",
+        margin: "30px"
+    },
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
@@ -129,14 +134,15 @@ class TicketPage extends PureComponent {
         }
         return(
             <div>
-                <h4>Ticket from  {ticket.author} </h4>
-                <h4>Risk: {ticket.color} </h4>
-                <h4>€ {ticket.price} </h4>
-                <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
-                <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
-                {isDialogOpen? this.renderDialog(ticket):null}
-                <Comments ticketId={ticket.ticket_id}/>
-               
+                <Paper className={classes.ticket}>
+                    <h4>Ticket from  {ticket.author_name} </h4>
+                    <h4>Risk: {ticket.color} </h4>
+                    <h4>€ {ticket.price} </h4>
+                    <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
+                    <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
+                    {isDialogOpen? this.renderDialog(ticket):null}
+                    <Comments ticketId={ticket.ticket_id}/>
+                </Paper>
             </div>
         )
     }
@@ -146,8 +152,7 @@ const mapStateToProps = (state, props) => {
     let ticketId = parseInt(props.match.params.id, 10); 
     let eventId = parseInt(props.match.params.event_id, 10); 
     let ticket = null;
-    if (typeof state.tickets[eventId] !== "undefined" && typeof state.tickets[eventId][ticketId] !== "undefined") {
-        console.log(state.tickets);
+    if (typeof state.tickets[eventId] !== "undefined") {
         ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
     }
     return {

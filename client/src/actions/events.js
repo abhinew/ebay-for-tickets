@@ -25,7 +25,6 @@ export const addEvent = event => {
 
 
 export const getEvents = () => (dispatch, getState) => {
-  console.log("getEvents")
   const state = getState()
   if (!state.currentUser) return null
   const jwt = state.currentUser.jwt

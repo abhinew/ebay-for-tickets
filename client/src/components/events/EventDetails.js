@@ -60,7 +60,6 @@ class EventDetails extends PureComponent {
             return <Redirect to="/"/>
         }
  
-        console.log(event);
         return(
             <div className="event-container" >
                 <h1>{event.name}</h1>
@@ -104,7 +103,7 @@ class EventDetails extends PureComponent {
 
 const mapStateToProps = (state, props) => {
 
-    let id = parseInt(props.match.params.id);
+    let id = parseInt(props.match.params.id, 10);
     let theEvent = state.events.find(function (event) {
         return event.event_id === id;
     });

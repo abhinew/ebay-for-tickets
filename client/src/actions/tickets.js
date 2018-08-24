@@ -35,8 +35,6 @@ export const createTicket = (ticket) => (dispatch, getState) => {
     const jwt = state.currentUser.jwt
   
     if (isExpired(jwt)) return dispatch(logout())
-
-    var event_id = ticket.event_id;
   
     return request
       .post(`${baseUrl}/ticket`)
