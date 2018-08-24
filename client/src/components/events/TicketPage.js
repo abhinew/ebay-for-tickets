@@ -8,6 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
+import { Link } from 'react-router-dom'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {updateTicket} from '../../actions/tickets'
 import Comments from './Comments';
@@ -18,10 +19,16 @@ const styles = theme => ({
         padding: "30px",
         margin: "30px"
     },
+    heading: {
+        textAlign: "center"
+    },
     textField: {
       marginLeft: theme.spacing.unit,
       marginRight: theme.spacing.unit,
       width: 200,
+    },
+    back: {
+        marginRight: "20px"
     }
 
 });
@@ -124,6 +131,10 @@ class TicketPage extends PureComponent {
             </DialogActions>
         </Dialog>)
     }
+    back() {
+        let {ticket} = this.props;
+        this.props.history.push(`/events/${ticket.event_id}`)
+    }
     
     render() {
          let { classes, ticket } = this.props;
@@ -135,11 +146,13 @@ class TicketPage extends PureComponent {
         return(
             <div>
                 <Paper className={classes.ticket}>
-                    <h4>Ticket from  {ticket.author_name} </h4>
-                    <h4>Risk: {ticket.color} </h4>
-                    <h4>€ {ticket.price} </h4>
+                <Button className={classes.back} onClick={this.back.bind(this)}> Back </Button>
+                <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
+                    <h1 className={classes.heading}>Ticket from  {ticket.author_name} </h1>
+                    <h2 className={classes.heading}>Risk:  </h2>
+                    <h3 className={classes.heading}>€{ticket.price}</h3>
                     <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
-                    <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
+                    
                     {isDialogOpen? this.renderDialog(ticket):null}
                     <Comments ticketId={ticket.ticket_id}/>
                 </Paper>
