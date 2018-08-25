@@ -4,11 +4,11 @@ import {logout} from './users'
 import {isExpired} from '../jwt'
 
 export const ADD_EVENT = 'ADD_EVENT'
-export const UPDATE_EVENTS = 'UPDATE_EVENTS'
+export const FETCH_EVENTS = 'FETCH_EVENTS'
 
-const updateEvents = events => {
+const fetchEvents = events => {
   return {
-    type: UPDATE_EVENTS,
+    type: FETCH_EVENTS,
     payload: events
   }
 }
@@ -21,9 +21,6 @@ export const addEvent = event => {
 }
   
 
-
-
-
 export const getEvents = () => (dispatch, getState) => {
   const state = getState()
   if (!state.currentUser) return null
@@ -34,7 +31,7 @@ export const getEvents = () => (dispatch, getState) => {
   request
     .get(`${baseUrl}/allevents`)
     .set('Authorization', `Bearer ${jwt}`)
-    .then(result => dispatch(updateEvents(result.body)))
+    .then(result => dispatch(fetchEvents(result.body)))
     .catch(err => console.error(err))
 }
 

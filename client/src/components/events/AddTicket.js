@@ -86,13 +86,6 @@ class AddTicket extends PureComponent {
     }
 }
 
-// const mapStateToProps = (state, props) => {
-//     return {
-//         comments : comments
-//     }
-// } 
-
-
 
 let AddTicketWrapper  = withStyles(styles)(AddTicket);
 export default connect(null, { 

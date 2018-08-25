@@ -7,6 +7,8 @@ import {getUsers} from '../../actions/users'
 import {Redirect} from 'react-router-dom'
 import {getEvents} from '../../actions/events'
 import Paper from '@material-ui/core/Paper';
+import moment from 'moment';
+
 
 const styles = theme => ({
     container: {
@@ -34,7 +36,7 @@ class EventsList extends PureComponent {
           if (this.props.users === null) this.props.getUsers()
         }
 
-        this.props.getEvents()
+        this.props.getEvents();
       }
     state = {
         activePage: 1
@@ -47,7 +49,7 @@ class EventsList extends PureComponent {
                     <h1>{event.name}</h1>
                     <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="200" height="200" alt="event-poster" /></Link>
                     <p>{event.description}</p>
-                    <span>From {event.start_date} to {event.end_date}</span>
+                    <span>From {moment(event.start_date).format('MM-DD-YYYY')} to {moment(event.end_date).format('MM-DD-YYYY')}</span>
                 </div>
             </Paper>
         </li>)
