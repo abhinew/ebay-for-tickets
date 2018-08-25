@@ -1,4 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
+import { text } from 'body-parser';
 
 @Entity()
 export  class Comment extends BaseEntity {
@@ -7,11 +8,15 @@ export  class Comment extends BaseEntity {
   comment_id: number
 
   @Column('text')
-  comment: string
+  text: string
 
-  @Column('int')
-  user_id: number
+  @Column()
+  authorName: string
 
-  @Column('int')
+  @Column()
   ticket_id: number
+
+  @Column()
+  user_id: number
+  
 }

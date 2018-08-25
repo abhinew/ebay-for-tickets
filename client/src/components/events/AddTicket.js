@@ -30,7 +30,7 @@ class AddTicket extends PureComponent {
         this.state = {
             event_id: props.match.params.event_id,
             image_url: null,
-            price: 0,
+            price: '',
             description: null
          };
     }
@@ -64,16 +64,16 @@ class AddTicket extends PureComponent {
 
                     <TextField
                         id="price"
-                        label="price"
+                        label="€"
                         className={classes.textField}
-                        onChange = {(event,newValue) => {this.setState({price: event.target.value})}}
+                        onChange = {(event) => {this.setState({price: event.target.value})}}
                         margin="normal"
                         value={this.state.price}
                     />
                     <br />
                     <TextField
                         id="description"
-                        label="description"
+                        label="Description"
                         className={classes.textField}
                         onChange = {(event) => {this.setState({description: event.target.value})}}
                         margin="normal"

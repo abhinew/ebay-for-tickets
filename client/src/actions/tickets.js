@@ -64,7 +64,6 @@ export const getTickets = (id) => (dispatch, getState) => {
   
 
   export const editTicket = (updatedTicket, ticketId, eventId) => (dispatch, getState) => {
-      console.log("updatedTicket", updatedTicket);
       const state = getState();
       const jwt = state.currentUser.jwt
 
