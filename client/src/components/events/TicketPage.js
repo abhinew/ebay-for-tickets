@@ -144,7 +144,6 @@ class TicketPage extends PureComponent {
          if (!ticket) {
             return <Redirect to="/"/>
         }
-        console.log("ticket1", ticket);
         return(
             <div>
                 <Paper className={classes.ticket}>
@@ -168,7 +167,6 @@ const mapStateToProps = (state, props) => {
     let eventId = parseInt(props.match.params.event_id, 10); 
     let ticket = null;
     if (typeof state.tickets[eventId] !== "undefined") {
-        console.log(state.tickets[eventId]);
         ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
     }
     return {

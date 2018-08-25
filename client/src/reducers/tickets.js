@@ -16,10 +16,13 @@ export default (state = initialState, { type, payload}) => {
             });
             return newState;
         case UPDATE_TICKET:          
-            let currentTicket = newState[payload.eventId].find(ticket => ticket.ticket_id === payload.ticketId)
-            currentTicket.price = payload.updatedTicket.price;
-            currentTicket.description = payload.updatedTicket.description;
-            currentTicket.image_url = payload.updatedTicket.image_url;
+            let index = newState[payload.eventId].findIndex(ticket => ticket.ticket_id === payload.ticketId)
+            newState[payload.eventId][index] = { ...newState[payload.eventId][index],
+                price : payload.updatedTicket.price,
+                description : payload.updatedTicket.description,
+                image_url : payload.updatedTicket.image_url
+            }
+            
             return newState;     
         default:
             return state;    

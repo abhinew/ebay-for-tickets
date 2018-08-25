@@ -46,14 +46,14 @@ import { Ticket } from './entity';
 
 
     @Patch('/tickets/:id([0-9]+)')
-    async updateGame(
+    async updateTicket(
       @CurrentUser() user: User,
       @Param('id') id: number,
       @Body() update: Ticket
     ) {
-      console.log("update");
+      console.log("update request");
       const ticket = await Ticket.findOneById(id);
-      console.log(ticket);
+      console.log("update.price", update.price);
       if (!ticket) throw new NotFoundError(`Ticket does not exist`)
       ticket.price = update.price;
       ticket.image_url = update.image_url;
