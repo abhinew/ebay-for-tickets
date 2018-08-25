@@ -1,5 +1,5 @@
 import { 
-    JsonController, CurrentUser, Authorized, Post, HttpCode, Body, Get, Param } from 'routing-controllers'
+    JsonController, CurrentUser, Authorized, Post, HttpCode, Body, Get, Param, Patch, NotFoundError} from 'routing-controllers'
 import User from '../users/entity'
 import { Ticket } from './entity';
   
@@ -25,8 +25,8 @@ import { Ticket } from './entity';
   
     @Get('/tickets/:event_id([0-9]+)')
     getTickets(@Param("event_id") event_id: number) {
-      return new Promise(function (resolve, reject) {
-        var theTickets;
+      return new Promise((resolve, reject) => {
+        let theTickets;
         Ticket.getTicketsOfEvent(event_id)
           .then((tickets) => {
             theTickets = tickets;
@@ -43,6 +43,26 @@ import { Ticket } from './entity';
           .catch(() => reject());
       });
     }
+
+
+    @Patch('/tickets/:id([0-9]+)')
+    async updateGame(
+      @CurrentUser() user: User,
+      @Param('id') id: number,
+      @Body() update: Ticket
+    ) {
+      console.log("update");
+      const ticket = await Ticket.findOneById(id);
+      console.log(ticket);
+      if (!ticket) throw new NotFoundError(`Ticket does not exist`)
+      ticket.price = update.price;
+      ticket.image_url = update.image_url;
+      // ticket.description = update.description;
+      await ticket.save();
+      return ticket
+    }
+
+
 }
   
   
