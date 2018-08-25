@@ -57,7 +57,7 @@ import { Ticket } from './entity';
       if (!ticket) throw new NotFoundError(`Ticket does not exist`)
       ticket.price = update.price;
       ticket.image_url = update.image_url;
-      // ticket.description = update.description;
+      ticket.description = update.description;
       await ticket.save();
       return ticket
     }

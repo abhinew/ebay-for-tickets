@@ -7,24 +7,26 @@ import * as request from 'superagent'
 export const UPDATE_TICKET = 'UPDATE_TICKET';
 export const GET_TICKETS = 'GET_TICKETS';
 
-export const updateTicket = (updatedTicket, ticketId) => {
+const updateTicket = (updatedTicket, ticketId, eventId) => {
     return {
         type: UPDATE_TICKET,
         payload: {
             updatedTicket : updatedTicket,
-            ticketId: ticketId
+            ticketId: ticketId,
+            eventId: eventId
         }
     }
 }
 
 
-export const saveTickets = (id, tickets) => {
+const saveTickets = (id, body) => {
     
     return {
         type: GET_TICKETS,
         payload: {
             event_id: id,
-            tickets: tickets
+            tickets: body.tickets,
+            risks: body.risks
         }
     }
 }
@@ -45,6 +47,7 @@ export const createTicket = (ticket) => (dispatch, getState) => {
   
  
 export const getTickets = (id) => (dispatch, getState) => {
+    
     const state = getState()
     if (!state.currentUser) return null
     const jwt = state.currentUser.jwt
@@ -59,3 +62,19 @@ export const getTickets = (id) => (dispatch, getState) => {
       .catch(err => console.error(err))
   }
   
+
+  export const editTicket = (updatedTicket, ticketId, eventId) => (dispatch, getState) => {
+      console.log(updatedTicket);
+      const state = getState();
+      const jwt = state.currentUser.jwt
+
+      if (isExpired(jwt)) return dispatch(logout())
+    
+      request
+        .patch(`${baseUrl}/tickets/${ticketId}`)
+        .set('Authorization', `Bearer ${jwt}`)
+        .send({ updatedTicket })
+        .then(_ => dispatch(updateTicket(updatedTicket, ticketId, eventId)))
+        .catch(err => console.error(err))
+
+  }

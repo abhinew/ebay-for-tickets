@@ -24,6 +24,9 @@ export class Ticket extends BaseEntity {
   @Column()
   createdDate: Date
 
+  @Column()
+  description: string
+  
   risk;
 
 
@@ -54,9 +57,9 @@ export class Ticket extends BaseEntity {
 
     risk += (this.wasAddedInBusinessHours())?-13:13;
     
-    let averagePriceForEvent = await this.getAverageTicketPrice();
+    let averageTicketPrice = await this.getAverageTicketPrice();
     let ticketPrice = this.price;
-    let percentageDiff = ((ticketPrice / averagePriceForEvent) - 1) * 100;
+    let percentageDiff = ((ticketPrice / averageTicketPrice) - 1) * 100;
     if (percentageDiff > 15) {
       percentageDiff = 15;
     }

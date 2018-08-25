@@ -10,7 +10,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import { Link } from 'react-router-dom'
 import DialogTitle from '@material-ui/core/DialogTitle';
-import {updateTicket} from '../../actions/tickets'
+import {editTicket} from '../../actions/tickets'
 import Comments from './Comments';
 import {Redirect} from 'react-router-dom';
 
@@ -53,6 +53,7 @@ class TicketPage extends PureComponent {
             price: ticket.price,
             description: ticket.description,
             image_url: ticket.image_url
+
          })
     };
 
@@ -75,9 +76,9 @@ class TicketPage extends PureComponent {
           image_url : event.target.value
         });
     };
-    handleSubmit = (ticketId) => {
+    handleSubmit = (ticketId, eventId) => {
         this.updateProperty({ open: false });
-        this.props.updateTicket(this.state,ticketId);
+        this.props.editTicket(this.state,ticketId, eventId);
     }
    
 
@@ -125,7 +126,7 @@ class TicketPage extends PureComponent {
                 <Button  onClick={this.handleClose} color="primary">
                 Cancel
                 </Button>
-                <Button  onClick={this.handleSubmit.bind(this,ticket.ticket_id)} color="primary">
+                <Button  onClick={this.handleSubmit.bind(this,ticket.ticket_id, ticket.event_id)} color="primary">
                 Submit
                 </Button>
             </DialogActions>
@@ -143,13 +144,14 @@ class TicketPage extends PureComponent {
          if (!ticket) {
             return <Redirect to="/"/>
         }
+        console.log("ticket1", ticket);
         return(
             <div>
                 <Paper className={classes.ticket}>
                 <Button className={classes.back} onClick={this.back.bind(this)}> Back </Button>
                 <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
                     <h1 className={classes.heading}>Ticket from  {ticket.author_name} </h1>
-                    <h2 className={classes.heading}>Risk:  </h2>
+                    <h2 className={classes.heading}>Risk: {ticket.risk}% </h2>
                     <h3 className={classes.heading}>€{ticket.price}</h3>
                     <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
                     
@@ -166,6 +168,7 @@ const mapStateToProps = (state, props) => {
     let eventId = parseInt(props.match.params.event_id, 10); 
     let ticket = null;
     if (typeof state.tickets[eventId] !== "undefined") {
+        console.log(state.tickets[eventId]);
         ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
     }
     return {
@@ -176,4 +179,4 @@ const mapStateToProps = (state, props) => {
 
 
 let TicketPageWrapper  = withStyles(styles)(TicketPage);
-export default connect(mapStateToProps, { updateTicket })(TicketPageWrapper)
+export default connect(mapStateToProps, { editTicket })(TicketPageWrapper)
