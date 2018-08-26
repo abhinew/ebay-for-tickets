@@ -19,7 +19,7 @@ const updateTicket = (updatedTicket, ticketId, eventId) => {
 }
 
 
-const saveTickets = (id, body) => {
+const fetchTickets = (id, body) => {
     
     return {
         type: GET_TICKETS,
@@ -58,12 +58,12 @@ export const getTickets = (id) => (dispatch, getState) => {
       .get(`${baseUrl}/tickets/${id}`)
 
       .set('Authorization', `Bearer ${jwt}`)
-      .then(result => dispatch(saveTickets(id, result.body)))
+      .then(result => dispatch(fetchTickets(id, result.body)))
       .catch(err => console.error(err))
-  }
+}
   
 
-  export const editTicket = (updatedTicket, ticketId, eventId) => (dispatch, getState) => {
+export const editTicket = (updatedTicket, ticketId, eventId) => (dispatch, getState) => {
       const state = getState();
       const jwt = state.currentUser.jwt
 
@@ -76,4 +76,4 @@ export const getTickets = (id) => (dispatch, getState) => {
         .then(_ => dispatch(updateTicket(updatedTicket, ticketId, eventId)))
         .catch(err => console.error(err))
 
-  }
+}

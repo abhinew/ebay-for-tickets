@@ -4,7 +4,7 @@ import TextField from '@material-ui/core/TextField';
 import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import {addComment} from '../../actions/comments';
+import {createComment, getComments } from '../../actions/comments';
 
 const styles = theme => ({
     textField: {
@@ -23,20 +23,26 @@ const styles = theme => ({
 
 
 class Comments extends PureComponent {
+    componentWillMount() {
+        this.props.getComments(this.props.ticketId);
+      }
 
     state = {
-       comment: ''
+       text: ''
     }
     handleSubmit = (ticketId) => {
-        this.props.addComment(this.state.comment, ticketId )
+        this.props.createComment({
+            text: this.state.text,
+            ticket_id: ticketId }). then(() => console.log("done"));
     }
     handleCommentChange = (event) => {
         this.setState({
-            comment: event.target.value
+            text: event.target.value
         })
     }
     render () {
         let { classes, comments, ticketId } = this.props;
+
         return (
             <div className={classes.commentsSection}>
                 <h3> Comments</h3>
@@ -59,7 +65,7 @@ class Comments extends PureComponent {
                     margin="normal"
                 />
                 <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit.bind(this, ticketId)}>Submit</Button>
-           </div>
+         </div>
         )
     }
 
@@ -67,18 +73,16 @@ class Comments extends PureComponent {
 }
 
 const mapStateToProps = (state, props) => {
-    
-
-   let comments = state.comments.filter((comment) => {
-        return comment.ticket_id === props.ticketId;
-           
-    })
+    let comments = [];
+    if (typeof state.comments[props.ticketId] !== "undefined") {
+        comments = state.comments[props.ticketId];
+    }
     return {
-        comments : comments
+        comments: comments
     }
 } 
 
 
 
 let CommentsWrapper  = withStyles(styles)(Comments);
-export default connect(mapStateToProps, { addComment })(CommentsWrapper)
+export default connect(mapStateToProps, { createComment, getComments })(CommentsWrapper)

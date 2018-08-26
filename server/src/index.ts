@@ -12,7 +12,7 @@ import * as IO from 'socket.io'
 import * as socketIoJwtAuth from 'socketio-jwt-auth'
 import {secret} from './jwt'
 import TicketController from './tickets/controller';
-
+import CommentController from './comments/controller';
 const app = new Koa()
 const server = new Server(app.callback())
 export const io = IO(server)
@@ -24,7 +24,8 @@ useKoaServer(app, {
     UserController,
     LoginController,
     EventController,
-    TicketController
+    TicketController,
+    CommentController
   ],
   authorizationChecker: (action: Action) => {
     const header: string = action.request.headers.authorization
@@ -69,6 +70,7 @@ io.on('connect', socket => {
     console.log(`User ${name} just disconnected`)
   })
 })
+
 
 setupDb()
   .then(_ => {

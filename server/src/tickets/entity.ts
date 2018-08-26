@@ -108,6 +108,12 @@ export class Ticket extends BaseEntity {
       .getMany();
   }
 
+  static async getCommentsOfTicket(ticket_id: number) {
+    return this.createQueryBuilder("comment")
+      .where("comment.ticket_id = :ticket_id", { ticket_id })
+      .getMany();
+  }
+
 }
 
 
