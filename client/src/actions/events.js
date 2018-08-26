@@ -21,9 +21,7 @@ export const addEvent = event => {
 }
   
 
-export const getEvents = () => (dispatch, getState) => {
-  const state = getState()
-  
+export const getEvents = () => (dispatch) => {
   request
     .get(`${baseUrl}/allevents`)
     .then(result => dispatch(fetchEvents(result.body)))

@@ -46,7 +46,7 @@ class EventsList extends PureComponent {
             <Paper className={classes.event}>
                 <div>
                     <h1>{event.name}</h1>
-                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="200" height="200" alt="event-poster" /></Link>
+                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="500" height="500" alt="event-poster" /></Link>
                     <p>{event.description}</p>
                     <span> {moment(event.start_date).format('LL')} - {moment(event.end_date).format('LL')}</span>
                 </div>

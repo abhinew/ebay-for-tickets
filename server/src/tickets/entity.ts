@@ -43,7 +43,7 @@ export class Ticket extends BaseEntity {
 
   async getRisk() {
 
-    var risk = 0;
+    let risk = 2;
     
     let numberOfTicketsForAuthor = await this.getNumberOfTicketsForAuthor();
     if (numberOfTicketsForAuthor === 1) {
@@ -64,7 +64,16 @@ export class Ticket extends BaseEntity {
       percentageDiff = 15;
     }
     risk -= percentageDiff;
-    var r = {
+    if (risk < 2) {
+      risk = 2
+    }
+    else if (risk > 98 ) {
+      risk = 98
+    }
+    else {
+      risk = Math.round(risk);
+    }
+    let r = {
       id: this.ticket_id,
       risk
     };
@@ -91,8 +100,8 @@ export class Ticket extends BaseEntity {
     let ticketsOfEvent = await Ticket.createQueryBuilder("ticket")
       .where("ticket.event_id = :event_id", { event_id })
       .getMany();
-    var size = ticketsOfEvent.length;
-    var total = 0;
+    let size = ticketsOfEvent.length;
+    let total = 0;
     ticketsOfEvent.forEach(function (item) {
       total += item.price;
     });
