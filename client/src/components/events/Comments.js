@@ -1,16 +1,16 @@
-import React, {PureComponent} from 'react'
-import {connect} from 'react-redux'
+import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
 import TextField from '@material-ui/core/TextField';
 import { Button, Typography } from '@material-ui/core';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
-import {createComment, getComments } from '../../actions/comments';
+import { createComment, getComments } from '../../actions/comments';
 
 const styles = theme => ({
     textField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
-      width: 200,
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
     },
     commentsSection: {
         width: "60%",
@@ -25,22 +25,23 @@ const styles = theme => ({
 class Comments extends PureComponent {
     componentWillMount() {
         this.props.getComments(this.props.ticketId);
-      }
+    }
 
     state = {
-       text: ''
+        text: ''
     }
     handleSubmit = (ticketId) => {
         this.props.createComment({
             text: this.state.text,
-            ticket_id: ticketId }). then(() => console.log("done"));
+            ticket_id: ticketId
+        }).then(() => this.props.getComments(this.props.ticketId));
     }
     handleCommentChange = (event) => {
         this.setState({
             text: event.target.value
         })
     }
-    render () {
+    render() {
         let { classes, comments, ticketId } = this.props;
 
         return (
@@ -48,15 +49,15 @@ class Comments extends PureComponent {
                 <h3> Comments</h3>
                 {comments.map((comment) => (<Paper className={classes.comment}>
                     <Typography>
-                        {comment.authorName} 
+                        {comment.authorName}
                     </Typography>
                     <Typography>
-                        {comment.text} 
+                        {comment.text}
                     </Typography>
                 </Paper>))}
 
 
-               
+
                 <TextField
                     id="name"
                     label="Enter your comment"
@@ -65,7 +66,7 @@ class Comments extends PureComponent {
                     margin="normal"
                 />
                 <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit.bind(this, ticketId)}>Submit</Button>
-         </div>
+            </div>
         )
     }
 
@@ -80,9 +81,9 @@ const mapStateToProps = (state, props) => {
     return {
         comments: comments
     }
-} 
+}
 
 
 
-let CommentsWrapper  = withStyles(styles)(Comments);
+let CommentsWrapper = withStyles(styles)(Comments);
 export default connect(mapStateToProps, { createComment, getComments })(CommentsWrapper)

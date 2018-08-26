@@ -24,7 +24,7 @@ export const addEvent = event => {
 export const getEvents = () => (dispatch, getState) => {
   const state = getState()
   if (!state.currentUser) return null
-  const jwt = state.currentUser.jwt
+   const jwt = state.currentUser.jwt
 
   if (isExpired(jwt)) return dispatch(logout())
 
@@ -37,7 +37,6 @@ export const getEvents = () => (dispatch, getState) => {
 
 
 export const createEvent = (event) => (dispatch, getState) => {
-  console.log(event);
   const state = getState()
   const jwt = state.currentUser.jwt
 

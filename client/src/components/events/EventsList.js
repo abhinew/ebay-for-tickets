@@ -31,7 +31,6 @@ const styles = theme => ({
 
 class EventsList extends PureComponent {
     componentWillMount() {
-
         if (this.props.authenticated) {
           if (this.props.users === null) this.props.getUsers()
         }
@@ -49,7 +48,7 @@ class EventsList extends PureComponent {
                     <h1>{event.name}</h1>
                     <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="200" height="200" alt="event-poster" /></Link>
                     <p>{event.description}</p>
-                    <span>From {moment(event.start_date).format('MM-DD-YYYY')} to {moment(event.end_date).format('MM-DD-YYYY')}</span>
+                    <span> {moment(event.start_date).format('LL')} - {moment(event.end_date).format('LL')}</span>
                 </div>
             </Paper>
         </li>)
@@ -70,16 +69,13 @@ class EventsList extends PureComponent {
         let startIndex = (this.state.activePage - 1) * 4;
 
 
-        if (!authenticated) {
-            return <Redirect to="/login" />;
-        }
-
         let hasMoreThan4 = events.length > 4;
         if (hasMoreThan4) {
             currentPageEvents = events.slice(startIndex, startIndex + 4);
         } else {
             currentPageEvents = events.slice();
         }
+
 
         return (
             <div className={classes.container}>
