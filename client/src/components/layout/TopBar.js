@@ -18,7 +18,7 @@ const styles = theme => ({
 
 
 const TopBar = (props) => {
-  const { history, user, classes } = props
+  const { history, location, user, classes } = props
 
   return (
     <AppBar position="absolute" style={{zIndex:10}}>
@@ -32,19 +32,18 @@ const TopBar = (props) => {
         }
 
         {
-
+           !user &&
           <Button color="inherit" onClick={() => history.push('/login')}>Login</Button>
         }
         {
-
+          !user &&
           <Button color="inherit" onClick={() => history.push('/signup')}>Sign up</Button>
         }
         {
-
           <Button color="inherit" onClick={() => history.push('/events')}>All Events</Button>
         }
         {
-
+          user && 
           <Button color="inherit" onClick={() => history.push('/logout')}>Log out</Button>
         }
       </Toolbar>
