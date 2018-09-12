@@ -18,7 +18,7 @@ const styles = theme => ({
 
 
 const TopBar = (props) => {
-  const { history, location, user, classes } = props
+  const { history, user, classes } = props
 
   return (
     <AppBar position="absolute" style={{zIndex:10}}>

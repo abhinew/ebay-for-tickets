@@ -13,6 +13,7 @@ import Button from '@material-ui/core/Button'
 import {getTickets} from "../../actions/tickets";
 import {Redirect} from 'react-router-dom';
 import { Typography } from '@material-ui/core';
+import {getEvents} from '../../actions/events'
 
 const styles = theme => ({
     actionCell: {
@@ -35,8 +36,9 @@ const styles = theme => ({
 
 
 class EventDetails extends PureComponent {
-    componentWillMount() {
-        var event_id = this.props.match.params.id;
+    componentDidMount() {
+        let event_id = this.props.match.params.id;
+        this.props.getEvents();
         this.props.getTickets(event_id);
       }
     
@@ -53,20 +55,18 @@ class EventDetails extends PureComponent {
         return color;
     }
     render() {
-
         let { event, classes, tickets, authenticated } = this.props;
-
-        if (!event) {
-            return <Redirect to="/"/>
-        }
- 
+        console.log("event", event);
         return(
             <div className="event-container" >
-                <h1>{event.name}</h1>
-                <img src={event.image_url} width="500" height="500" alt="event-poster" />
-                <br />
-                {authenticated? <Link to={`/add-ticket/${event.event_id}`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
-                <Paper className={classes.root}>
+            {
+                this.props.event && 
+                <div>
+                    <h1>{event.name}</h1>
+                    <img src={event.image_url} width="500" height="500" alt="event-poster" />
+                    <br />
+                    {authenticated? <Link to={`/add-ticket/${event.event_id}`}><Button variant="contained" color="primary" className={classes.button}>ADD TICKET</Button></Link>: null}
+                    <Paper className={classes.root}> 
                     <Table className={classes.table}>
                     <TableHead>
                     <TableRow>
@@ -95,7 +95,10 @@ class EventDetails extends PureComponent {
                     })}
                     </TableBody>
                     </Table>
-                </Paper>
+                    </Paper>
+                </div>
+                
+            }   
             </div>
         )
     }
@@ -104,6 +107,7 @@ class EventDetails extends PureComponent {
 const mapStateToProps = (state, props) => {
 
     let id = parseInt(props.match.params.id, 10);
+
     let theEvent = state.events.find(function (event) {
         return event.event_id === id;
     });
@@ -121,5 +125,5 @@ const mapStateToProps = (state, props) => {
 
 let EventDetailsWrapper  = withStyles(styles)(EventDetails);
 export default connect(mapStateToProps, {
-    getTickets
+    getTickets, getEvents
 })(EventDetailsWrapper)

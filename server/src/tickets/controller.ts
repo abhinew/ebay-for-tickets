@@ -11,8 +11,8 @@ import { Ticket } from './entity';
     @HttpCode(201)
     async createTicket(@CurrentUser() user: User,@Body() ticket: Ticket
     ) {
-      
-      ticket.author_name = `${user.firstName} ${user.lastName}`;
+
+      ticket.author_name = `${user.firstName}`;
       ticket.createdDate = new Date();
       ticket.user_id = user.id;
       return ticket.save()

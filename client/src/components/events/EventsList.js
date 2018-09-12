@@ -4,7 +4,6 @@ import Button from '@material-ui/core/Button'
 import { withStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom'
 import {getUsers} from '../../actions/users'
-import {Redirect} from 'react-router-dom'
 import {getEvents} from '../../actions/events'
 import Paper from '@material-ui/core/Paper';
 import moment from 'moment';
@@ -46,7 +45,7 @@ class EventsList extends PureComponent {
             <Paper className={classes.event}>
                 <div>
                     <h1>{event.name}</h1>
-                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="500" height="500" alt="event-poster" /></Link>
+                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="500" height="400" alt="event-poster" /></Link>
                     <p>{event.description}</p>
                     <span> {moment(event.start_date).format('LL')} - {moment(event.end_date).format('LL')}</span>
                 </div>

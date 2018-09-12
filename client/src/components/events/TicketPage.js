@@ -12,7 +12,7 @@ import { Link } from 'react-router-dom'
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {editTicket} from '../../actions/tickets'
 import Comments from './Comments';
-import {Redirect} from 'react-router-dom';
+import {getTickets} from "../../actions/tickets";
 
 const styles = theme => ({
     ticket: {
@@ -36,11 +36,16 @@ const styles = theme => ({
 
 class TicketPage extends PureComponent {
 
+    componentDidMount() {
+        let event_id = this.props.match.params.event_id;
+        this.props.getTickets(event_id);
+    }
     state = {
         open: false,
         price: null,
         description: null,
-        image_url: null
+        image_url: null,
+        
 
     }
     updateProperty = (obj) => {
@@ -141,11 +146,12 @@ class TicketPage extends PureComponent {
          let { classes, ticket } = this.props;
          let isDialogOpen = this.state.open;  
          
-         if (!ticket) {
-            return <Redirect to="/"/>
-        }
+        // if (!ticket) {
+        //     return <Redirect to="/"/>
+        // }
         return(
             <div>
+                {ticket && 
                 <Paper className={classes.ticket}>
                 <Button className={classes.back} onClick={this.back.bind(this)}> Back </Button>
                 <Button variant="contained" color="primary" className={classes.button} onClick={ this.handleClickOpen.bind(this, ticket)}> Edit </Button>
@@ -156,7 +162,8 @@ class TicketPage extends PureComponent {
                     
                     {isDialogOpen? this.renderDialog(ticket):null}
                     <Comments ticketId={ticket.ticket_id}/>
-                </Paper>
+                </Paper>}
+                
             </div>
         )
     }
@@ -166,9 +173,11 @@ const mapStateToProps = (state, props) => {
     let ticketId = parseInt(props.match.params.id, 10); 
     let eventId = parseInt(props.match.params.event_id, 10); 
     let ticket = null;
+    
     if (typeof state.tickets[eventId] !== "undefined") {
         ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
     }
+    console.log(ticket);
     return {
         ticket: ticket
     }
@@ -177,4 +186,4 @@ const mapStateToProps = (state, props) => {
 
 
 let TicketPageWrapper  = withStyles(styles)(TicketPage);
-export default connect(mapStateToProps, { editTicket })(TicketPageWrapper)
+export default connect(mapStateToProps, { getTickets, editTicket })(TicketPageWrapper)

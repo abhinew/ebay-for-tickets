@@ -12,7 +12,7 @@ export default class CommentController {
     @HttpCode(201)
     createComment(@CurrentUser() user: User,@Body() comment: Comment
     ) {
-      comment.author_name = `${user.firstName} ${user.lastName}`;
+      comment.author_name = `${user.firstName}`;
       comment.user_id = user.id
       return comment.save()
     }
