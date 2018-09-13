@@ -1,10 +1,11 @@
 import { BaseEntity, PrimaryGeneratedColumn, Column, Entity } from 'typeorm'
-
+import {getRepository} from "typeorm";
+import {Comment} from "../comments/entity";
 @Entity()
 export class Ticket extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  ticket_id?: number
+  ticket_id: number
 
   @Column()
   event_id: string
@@ -50,8 +51,9 @@ export class Ticket extends BaseEntity {
       risk += 4;
     }
     let numberOfComments = await this.getNumberOfComments();
-
+    console.log("numberOfComments", numberOfComments)
     if (numberOfComments > 3) {
+      console.log("condition true");
       risk += 6;
     }
 
@@ -64,15 +66,15 @@ export class Ticket extends BaseEntity {
       percentageDiff = 15;
     }
     risk -= percentageDiff;
-    if (risk < 2) {
-      risk = 2
-    }
-    else if (risk > 98 ) {
-      risk = 98
-    }
-    else {
-      risk = Math.round(risk);
-    }
+    // if (risk < 2) {
+    //   risk = 2
+    // }
+    // else if (risk > 98 ) {
+    //   risk = 98
+    // }
+    // else {
+    //   risk = Math.round(risk);
+    // }
     let r = {
       id: this.ticket_id,
       risk
@@ -82,7 +84,8 @@ export class Ticket extends BaseEntity {
 
   async getNumberOfComments() {
     let ticket_id = this.ticket_id;
-    return await Ticket.createQueryBuilder("comment")
+    console.log("ticket_id", ticket_id);
+    return await Comment.createQueryBuilder("comment")
       .where("comment.ticket_id = :ticket_id", { ticket_id })
       .getCount();
   }

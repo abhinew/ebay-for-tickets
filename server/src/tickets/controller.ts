@@ -26,16 +26,19 @@ import { Ticket } from './entity';
   
     @Get('/tickets/:event_id([0-9]+)')
     getTickets(@Param("event_id") event_id: number) {
+      console.log("getTickets is called")
       return new Promise((resolve, reject) => {
         let theTickets;
         Ticket.getTicketsOfEvent(event_id)
           .then((tickets) => {
             theTickets = tickets;
             return Promise.all(tickets.map(function (ticket) {
+            
               return ticket.getRisk();
             }));
           })
           .then(function (risks) {
+            console.log("risks", risks);
             resolve({
               tickets: theTickets,
               risks: risks

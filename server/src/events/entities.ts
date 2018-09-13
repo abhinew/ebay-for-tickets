@@ -4,7 +4,7 @@ import { BaseEntity, PrimaryGeneratedColumn, Column, Entity} from 'typeorm'
 export class Event extends BaseEntity {
 
   @PrimaryGeneratedColumn()
-  event_id?: number
+  event_id: number
 
   @Column('text')
   name: string
