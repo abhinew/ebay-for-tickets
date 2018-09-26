@@ -1,5 +1,5 @@
 import { BaseEntity, Entity, PrimaryGeneratedColumn, Column} from 'typeorm'
-import { text } from 'body-parser';
+
 
 @Entity()
 export  class Comment extends BaseEntity {

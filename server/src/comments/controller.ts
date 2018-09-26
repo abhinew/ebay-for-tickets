@@ -1,5 +1,5 @@
 import { 
-    JsonController, CurrentUser, Authorized, Post, HttpCode, Body, Get, Param, Patch, NotFoundError} from 'routing-controllers'
+    JsonController, CurrentUser, Authorized, Post, HttpCode, Body, Get, Param} from 'routing-controllers'
 import User from '../users/entity'
 import { Comment } from './entity';
 
