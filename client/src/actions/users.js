@@ -84,8 +84,8 @@ export const getUsers = () => (dispatch, getState) => {
 
   request
     .get(`${baseUrl}/users`)
-    .set('Access-Control-Allow-Origin', '*')
     .set('Authorization', `Bearer ${jwt}`)
+    .set('Access-Control-Allow-Origin', '*')
     .then(result => dispatch(updateUsers(result.body)))
     .catch(err => console.error(err))
 }
