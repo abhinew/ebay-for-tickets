@@ -24,6 +24,7 @@ export const addEvent = event => {
 export const getEvents = () => (dispatch) => {
   request
     .get(`${baseUrl}/allevents`)
+    .set('Access-Control-Allow-Origin', '*')
     .then(result => dispatch(fetchEvents(result.body)))
     .catch(err => console.error(err))
 }
@@ -37,6 +38,7 @@ export const createEvent = (event) => (dispatch, getState) => {
 
   return request
     .post(`${baseUrl}/events`)
+    .set('Access-Control-Allow-Origin', '*')
     .send(event)
     .set('Authorization', `Bearer ${jwt}`) 
     .then(result => dispatch(addEvent(result.body)))

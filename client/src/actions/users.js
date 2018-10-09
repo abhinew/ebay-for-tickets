@@ -47,6 +47,7 @@ export const login = (email, password) => (dispatch) =>
 	request
 		.post(`${baseUrl}/logins`)
     .send({email, password})
+    .set('Access-Control-Allow-Origin', '*')
     .then(result => dispatch(userLoginSuccess(result.body)))
     .catch(err => {
     	if (err.status === 400) {
@@ -60,7 +61,8 @@ export const login = (email, password) => (dispatch) =>
 export const signup = (email, password) => (dispatch) =>
 	request
 		.post(`${baseUrl}/users`)
-		.send({ firstName: email, lastName: email, email, password })
+    .send({ firstName: email, lastName: email, email, password })
+    .set('Access-Control-Allow-Origin', '*')
 		.then(result => {
 			dispatch(userSignupSuccess())
 		})
@@ -82,6 +84,7 @@ export const getUsers = () => (dispatch, getState) => {
 
   request
     .get(`${baseUrl}/users`)
+    .set('Access-Control-Allow-Origin', '*')
     .set('Authorization', `Bearer ${jwt}`)
     .then(result => dispatch(updateUsers(result.body)))
     .catch(err => console.error(err))

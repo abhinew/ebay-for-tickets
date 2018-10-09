@@ -25,6 +25,8 @@ class CustomNamingStrategy extends DefaultNamingStrategy implements NamingStrate
   }
 }
 
+console.log(process.env.DATABASE_URL);
+
 export default () =>
   createConnection({
     type: "postgres",

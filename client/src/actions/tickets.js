@@ -41,6 +41,7 @@ export const createTicket = (ticket) => (dispatch, getState) => {
     return request
       .post(`${baseUrl}/ticket`)
       .send(ticket)
+      .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${jwt}`)
       .catch(err => console.error(err))
 }
@@ -56,7 +57,7 @@ export const getTickets = (id) => (dispatch, getState) => {
   
     request
       .get(`${baseUrl}/tickets/${id}`)
-
+      .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${jwt}`)
       .then(result => dispatch(fetchTickets(id, result.body)))
       .catch(err => console.error(err))
@@ -71,6 +72,7 @@ export const editTicket = (updatedTicket, ticketId, eventId) => (dispatch, getSt
     
       request
         .patch(`${baseUrl}/tickets/${ticketId}`)
+        .set('Access-Control-Allow-Origin', '*')
         .set('Authorization', `Bearer ${jwt}`)
         .send(updatedTicket)
         .then(_ => dispatch(updateTicket(updatedTicket, ticketId, eventId)))

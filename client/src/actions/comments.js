@@ -26,6 +26,7 @@ export const getComments = (ticketId) => (dispatch, getState) => {
   
     request
       .get(`${baseUrl}/comments/${ticketId}`)
+      .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${jwt}`)
       .then(result => dispatch(fetchComments(ticketId, result.body)))
       .catch(err => console.error(err))
@@ -42,6 +43,7 @@ export const createComment = (comment) => (dispatch, getState) => {
     return request
       .post(`${baseUrl}/comment`)
       .send(comment)
+      .set('Access-Control-Allow-Origin', '*')
       .set('Authorization', `Bearer ${jwt}`)
       .catch(err => console.error(err))
 }
