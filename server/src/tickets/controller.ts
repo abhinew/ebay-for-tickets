@@ -51,7 +51,6 @@ import { Ticket } from './entity';
 
     @Patch('/tickets/:id([0-9]+)')
     async updateTicket(
-      @CurrentUser() user: User,
       @Param('id') id: number,
       @Body() update: Ticket
     ) {

@@ -1,5 +1,4 @@
-import { BaseEntity, PrimaryGeneratedColumn, Column, Entity } from 'typeorm'
-import {getRepository} from "typeorm";
+import { BaseEntity, PrimaryGeneratedColumn, Column, Entity } from 'typeorm';
 import {Comment} from "../comments/entity";
 @Entity()
 export class Ticket extends BaseEntity {
