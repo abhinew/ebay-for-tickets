@@ -26,7 +26,6 @@ import { Ticket } from './entity';
   
     @Get('/tickets/:event_id([0-9]+)')
     getTickets(@Param("event_id") event_id: number) {
-      console.log("getTickets is called")
       return new Promise((resolve, reject) => {
         let theTickets;
         Ticket.getTicketsOfEvent(event_id)
@@ -38,7 +37,6 @@ import { Ticket } from './entity';
             }));
           })
           .then(function (risks) {
-            console.log("risks", risks);
             resolve({
               tickets: theTickets,
               risks: risks
@@ -54,12 +52,9 @@ import { Ticket } from './entity';
       @Param('id') id: number,
       @Body() update: Ticket
     ) {
-      console.log("update request");
       const ticket = await Ticket.findOneById(id);
-      console.log("update.price", update.price);
       if (!ticket) throw new NotFoundError(`Ticket does not exist`)
       ticket.price = update.price;
-      ticket.image_url = update.image_url;
       ticket.description = update.description;
       await ticket.save();
       return ticket

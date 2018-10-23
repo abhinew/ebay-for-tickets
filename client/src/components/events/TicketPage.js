@@ -43,10 +43,7 @@ class TicketPage extends PureComponent {
     state = {
         open: false,
         price: null,
-        description: null,
-        image_url: null,
-        
-
+        description: null
     }
     updateProperty = (obj) => {
         var newState = Object.assign({}, this.state, obj);
@@ -56,9 +53,7 @@ class TicketPage extends PureComponent {
         this.updateProperty({ 
             open: true,
             price: ticket.price,
-            description: ticket.description,
-            image_url: ticket.image_url
-
+            description: ticket.description
          })
     };
 
@@ -76,11 +71,7 @@ class TicketPage extends PureComponent {
           description : event.target.value
         });
     };
-    handleImageChange = (event) => {
-        this.updateProperty({
-          image_url : event.target.value
-        });
-    };
+    
     handleSubmit = (ticketId, eventId) => {
         this.updateProperty({ open: false });
         this.props.editTicket(this.state,ticketId, eventId);
@@ -116,16 +107,6 @@ class TicketPage extends PureComponent {
                 onChange={this.handlePriceChange}
                 value={this.state.price}
                 />
-                 <TextField
-                autoFocus
-                margin="dense"
-                id="image"
-                label="Enter image url"
-                type="text"
-                fullWidth
-                onChange={this.handleImageChange}
-                value={this.state.image_url}
-                />
             </DialogContent>
             <DialogActions>
                 <Button  onClick={this.handleClose} color="primary">
@@ -158,7 +139,7 @@ class TicketPage extends PureComponent {
                     <h1 className={classes.heading}>Ticket from  {ticket.author_name} </h1>
                     <h2 className={classes.heading}>Risk: {ticket.risk}% </h2>
                     <h3 className={classes.heading}>€{ticket.price}</h3>
-                    <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" />
+                    {/* <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" /> */}
                     
                     {isDialogOpen? this.renderDialog(ticket):null}
                     <Comments ticketId={ticket.ticket_id}/>
@@ -177,7 +158,6 @@ const mapStateToProps = (state, props) => {
     if (typeof state.tickets[eventId] !== "undefined") {
         ticket = state.tickets[eventId].find((ticket) => ticket.ticket_id === ticketId);
     }
-    console.log(ticket);
     return {
         ticket: ticket
     }

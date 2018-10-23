@@ -24,7 +24,6 @@ export default class EventController {
   getEvents() {
 
     var events = Event.getActiveEvents();
-    console.log(events);
     return events;
   }
 //test

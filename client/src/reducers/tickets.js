@@ -20,7 +20,6 @@ export default (state = initialState, { type, payload}) => {
             newState[payload.eventId][index] = { ...newState[payload.eventId][index],
                 price : payload.updatedTicket.price,
                 description : payload.updatedTicket.description,
-                image_url : payload.updatedTicket.image_url
             }
             
             return newState;     

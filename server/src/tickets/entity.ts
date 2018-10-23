@@ -18,9 +18,6 @@ export class Ticket extends BaseEntity {
   @Column()
   price: number
 
-  @Column('text')
-  image_url: string
-
   @Column()
   createdDate: Date
 
@@ -50,9 +47,7 @@ export class Ticket extends BaseEntity {
       risk += 4;
     }
     let numberOfComments = await this.getNumberOfComments();
-    console.log("numberOfComments", numberOfComments)
     if (numberOfComments > 3) {
-      console.log("condition true");
       risk += 6;
     }
 
@@ -83,7 +78,6 @@ export class Ticket extends BaseEntity {
 
   async getNumberOfComments() {
     let ticket_id = this.ticket_id;
-    console.log("ticket_id", ticket_id);
     return await Comment.createQueryBuilder("comment")
       .where("comment.ticket_id = :ticket_id", { ticket_id })
       .getCount();

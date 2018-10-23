@@ -11,14 +11,29 @@ import moment from 'moment';
 
 const styles = theme => ({
     container: {
-        padding: "30px"
+        width: "970px",
+        margin: "0 auto",
+        padding: "20px 0"
     },
     event: {
         padding: "20px",
-        marginBottom: "20px"
+        marginBottom: "20px",
+        '&:after' : {
+            clear: "both",
+            content: "close-quote",
+            display: "block"
+        }
+    },
+    eventDetails: {
+            float: "left",
+            width: "50%",
+            '&:second-child' : {
+                "padding-left" : "20px"
+            }
     },
     list: {
-        listStyle: "none"
+        listStyle: "none",
+        padding: "0"
     },
     button: {
       margin: theme.spacing.unit,
@@ -43,12 +58,15 @@ class EventsList extends PureComponent {
         const {classes} = this.props;
         return ( <li key={event.event_id}>
             <Paper className={classes.event}>
-                <div>
+                <div className={classes.eventDetails}>
+                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} alt="event-poster" /></Link>
+                </div>    
+                <div className={classes.eventDetails}> 
                     <h1>{event.name}</h1>
-                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="500" height="400" alt="event-poster" /></Link>
                     <p>{event.description}</p>
                     <span> {moment(event.start_date).format('LL')} - {moment(event.end_date).format('LL')}</span>
                 </div>
+                
             </Paper>
         </li>)
     }
@@ -65,12 +83,12 @@ class EventsList extends PureComponent {
         let { events, authenticated } =  this.props,
             currentPageEvents;
         const { classes } = this.props;
-        let startIndex = (this.state.activePage - 1) * 4;
+        let startIndex = (this.state.activePage - 1) * 8;
 
 
-        let hasMoreThan4 = events.length > 4;
-        if (hasMoreThan4) {
-            currentPageEvents = events.slice(startIndex, startIndex + 4);
+        let hasMoreThan8 = events.length > 8;
+        if (hasMoreThan8) {
+            currentPageEvents = events.slice(startIndex, startIndex + 8);
         } else {
             currentPageEvents = events.slice();
         }
@@ -83,14 +101,14 @@ class EventsList extends PureComponent {
                     <ul className={classes.list}>
                         { currentPageEvents.map(this.displayEvent) }
                     </ul>
-                    { (hasMoreThan4) ? this.getPageNumbers(): null}
+                    { (hasMoreThan8) ? this.getPageNumbers(): null}
             </div>
         )
     }
 
     getPageNumbers() {
         let {classes, events}  = this.props;
-        let shouldShowNextButton = this.state.activePage <= Math.floor(events.length / 4);
+        let shouldShowNextButton = this.state.activePage <= Math.floor(events.length / 8);
         let shouldShowPrevButton = this.state.activePage > 1;
         return <div>
             {(shouldShowPrevButton) ? <Button variant="contained" color="primary" className={classes.button} onClick={ this.onPreviousClick.bind(this) }>Previous</Button> : null }

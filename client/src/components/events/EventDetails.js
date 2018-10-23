@@ -56,7 +56,6 @@ class EventDetails extends PureComponent {
     }
     render() {
         let { event, classes, tickets, authenticated } = this.props;
-        console.log("event", event);
         return(
             <div className="event-container" >
             {

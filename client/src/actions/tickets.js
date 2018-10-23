@@ -48,7 +48,6 @@ export const createTicket = (ticket) => (dispatch, getState) => {
   
  
 export const getTickets = (id) => (dispatch, getState) => {
-    console.log("getTickets called")
     const state = getState()
     if (!state.currentUser) return null
     const jwt = state.currentUser.jwt
