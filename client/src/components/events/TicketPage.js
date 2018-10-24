@@ -139,7 +139,7 @@ class TicketPage extends PureComponent {
                     <h1 className={classes.heading}>Ticket from  {ticket.author_name} </h1>
                     <h2 className={classes.heading}>Risk: {ticket.risk}% </h2>
                     <h3 className={classes.heading}>€{ticket.price}</h3>
-                    {/* <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" /> */}
+                    <img className="ticket-image" src={ticket.image_url} alt="ticket-scan" /> 
                     
                     {isDialogOpen? this.renderDialog(ticket):null}
                     <Comments ticketId={ticket.ticket_id}/>

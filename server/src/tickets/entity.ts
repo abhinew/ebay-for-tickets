@@ -16,6 +16,9 @@ export class Ticket extends BaseEntity {
   user_id: number
 
   @Column()
+  image_url: string
+  
+  @Column()
   price: number
 
   @Column()

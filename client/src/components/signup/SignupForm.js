@@ -15,10 +15,7 @@ const styles = theme => ({
       width: 400,
       marginLeft: 'auto',
       marginRight: 'auto',
-		},
-		typography: {
-			useNextVariants: true,
-		},
+		}
   },
   paper: {
     marginTop: theme.spacing.unit * 8,
@@ -52,7 +49,7 @@ class SignupForm extends PureComponent {
 			<main className={classes.layout}>
             <Paper className={classes.paper}>
    
-			<Typography component="h1" variant="h5">
+			<Typography component="h1" variant="headline">
           Sign up
       </Typography>
   			<form className={classes.form} onSubmit={this.handleSubmit}>

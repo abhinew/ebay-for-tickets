@@ -43,7 +43,8 @@ class AddTicket extends PureComponent {
         this.props.addTicket({
             event_id: this.state.event_id,
             price: this.state.price,
-            description: this.state.description
+            description: this.state.description,
+            image_url: this.state.uploadedFileCloudinaryUrl
         }).then(() => {
             this.props.history.push(`/events/${this.state.event_id}`);
         })

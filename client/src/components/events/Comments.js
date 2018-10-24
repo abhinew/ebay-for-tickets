@@ -47,7 +47,7 @@ class Comments extends PureComponent {
         return (
             <div className={classes.commentsSection}>
                 <h3> Comments</h3>
-                {comments.map((comment) => (<Paper className={classes.comment}>
+                {comments.map((comment) => (<Paper key={comment.id} className={classes.comment}>
                     <Typography>
                         {comment.authorName}
                     </Typography>
