@@ -59,7 +59,7 @@ class EventsList extends PureComponent {
         return ( <li key={event.event_id}>
             <Paper className={classes.event}>
                 <div className={classes.eventDetails}>
-                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} alt="event-poster" /></Link>
+                    <Link to={`/events/${event.event_id}`} ><img src={event.image_url} width="405px" height= "250px" border-radius= "5px" alt="event-poster" /></Link>
                 </div>    
                 <div className={classes.eventDetails}> 
                     <h1>{event.name}</h1>
